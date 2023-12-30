@@ -24,13 +24,13 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-            az storage blob upload-batch --account-name $SA_NAME --auth-mode key -d '$web' -s .
+            az storage blob upload-batch --account-name ${{ env.SA_NAME }} --auth-mode key -d '$web' -s .
     - name: Purge CDN endpoint
       uses: azure/CLI@v1
       with:
         inlineScript: |
-           az cdn endpoint purge --content-paths  "/*" --profile-name "$CDN_PROFILE_NAME" --name "$CDN_ENDPOINT_CONTACT" --resource-group "$RESOURCE_GROUP"
-           az cdn endpoint purge --content-paths  "/*" --profile-name "$CDN_PROFILE_NAME" --name "$CDN_ENDPOINT_BLOG" --resource-group "$RESOURCE_GROUP"
+           az cdn endpoint purge --content-paths  "/*" --profile-name "${{ env.CDN_PROFILE_NAME }}" --name "${{ env.CDN_ENDPOINT_CONTACT }}" --resource-group "${{ env.RESOURCE_GROUP }}"
+           az cdn endpoint purge --content-paths  "/*" --profile-name "${{ env.CDN_PROFILE_NAME }}" --name "${{ env.CDN_ENDPOINT_BLOG }}" --resource-group "${{ env.RESOURCE_GROUP }}"
 
   # Azure logout
     - name: logout
