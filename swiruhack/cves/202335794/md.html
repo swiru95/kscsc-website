@@ -140,7 +140,9 @@
                 It uses SSH2 as a client on a host to proxy a Websocket/Socket.io connection to a SSH2 server.</p>
             <p>When a session of WebSSH is established with Gateway Device any external user can hijack it without any authentication and authorization.</p>
             <p>Session establishment is done via GET request to proper<br>
-            <code>/ap/remote/&lt;mac&gt;?ssh_port=&lt;ac-rev-ssh-port&gt;</code><br><br>
+            <blockquote>
+                <code>/ap/remote/&lt;mac&gt;?ssh_port=&lt;ac-rev-ssh-port&gt;</code>
+            </blockquote>
             Gateway then receiving request through MQTT (or CAPWAP) channel<br>
             and establishes SSH tunnel with local port forwarding to Access Controller.<br>
             Then Access-Controller binds to the forwarded port with SSH Web Session.<br>

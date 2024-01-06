@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SwiruHack online</title>
+    <style>
+        /* Use a monospaced font for the body text */
+        body {
+            font-family: monospace;
+            color: whitesmoke;
+            background-color: #222;
+            align-self: center;
+            text-align: center;
+        }
+
+        @keyframes appear {
+            0% {
+                filter: blur(10px);
+            }
+            100% {
+                filter: blur(0px);
+            }
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+                filter: blur(2px);
+            }
+
+            10% {
+                filter: blur(3px);
+            }
+
+            20% {
+                filter: blur(2px);
+            }
+
+            30% {
+                filter: blur(1px);
+            }
+
+            40% {
+                filter: blur(0px);
+            }
+
+            60% {
+                transform: translateX(10px);
+            }
+
+            70% {
+                transform: translateX(-10px);
+            }
+
+            80% {
+                transform: translateX(10px);
+            }
+
+            90% {
+                transform: translateX(-10px);
+                filter: blur(1px);
+            }
+
+            100% {
+                transform: translateX(0);
+                filter: blur(2px);
+            }
+        }
+
+        .sign {
+            animation: shake 2s linear infinite;
+
+            /* other style rules */
+        }
+
+        a:any-link {
+            color: azure;
+        }
+
+        /* Create a grid layout using CSS Grid */
+        .grid {
+            animation: appear 1s linear forwards;
+            align-self: center;
+            justify-content: center;
+            display: grid;
+            grid-template-columns: max-content;
+            grid-template-rows: auto;
+            grid-gap: 20px;
+        }
+
+        /* Style the grid items */
+        .md {
+            align-self: center;
+            background-color: rgb(1, 48, 11);
+            color: whitesmoke;
+            text-align: left;
+            font-size: 1.25em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CVES</h1>
+    <p>Common Vulnerabilities and Exposures<br>CVE MITRE: 
+<a href=https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-31446>CVE-2023-31446</a></p>
+    <!-- Use ASCII art to create a logo -->
+    <div class="sign">
+        <pre onclick="window.location='/'">
+ ____          _            _   _            _    
+/ ___|_      _(_)_ __ _   _| | | | __ _  ___| | __
+\___ \ \ /\ / / | '__| | | | |_| |/ _` |/ __| |/ /
+ ___) \ V  V /| | |  | |_| |  _  | (_| | (__|   < 
+|____/ \_/\_/ |_|_|   \__,_|_| |_|\__,_|\___|_|\_\
+       
+    </pre>
+    </div>
+    <!-- Create a grid of items using the .grid and .grid-item classes -->
+    <div class="grid">
+        <div class="md">
+            <h1 id="cve-2023-31446-remote-code-execution">CVE-2023-31446-Remote-Code-Execution</h1>
+            <p>Repository contains description for CVE-2023-31446 discovered by Dodge Industrial Team for Dodge OPTIFY platfrom.</p>
+            <hr>
+            <p>CVE ID: CVE-2023-31446
+                <br>Vendor: Cassia Networks
+                <br>Product: Cassia Gateway Firmware
+                <br>Version: &lt;2.1.1.230309*</p>
+            <hr>
+            <p>Vulnerability: Remote Code Execution/Remote Code Injection
+                <br>Affected: gateways
+                <br>Decription: <em>queueUrl</em> parameter in <em>/bypass/config</em> is not sanitized.<br>
+                This leads to injecting bash code and executing it with root privileges on device startup.<br>Status: Confirmed by vendor, Fixed<br>Version Patched: 2.1.1.230720*</p>
+            <hr>
+            <h4 id="details">Details</h4>
+            <p>Cassia has implemented in the past function that allows Gateways to push bluetooth scan data to the SQS Amazon Services.<br>
+                The settings for mentioned functionality could be set by API endpoint:</p>
+            <blockquote>
+            <p>http://<ip>/bypass/config?type=sqs&amp;keyId=&lt;&quot;keyId&quot;&gt;&amp;key=&lt;&quot;keysecret&quot;&gt;&amp;queueUrl=&lt;&quot;queueServiceUrl&quot;&gt;  </p>
+            </blockquote>
+            <p>Based on the investigation the SQS feature starts the service on the boot time of the device.<br>Service loads configuration file, where mentioned endpoint overwrite the settings.<br>Service after loading specified URL runs nslookup from root bash perspective what allows to run any command embeded into URL parameter.<br>The access to the endpoint is not authenticated by default. More of that the feature was not described in the official Cassia documentation.</p>
+            <hr>
+            <h4 id="exploitation">Exploitation</h4>
+            <p>Attacker can embed bash command ${id} into <em>queueUrl</em> parameter:<br>
+            <img src="img/1.png" alt="query"><br><br>  </p>
+            <p>After rebooting device, gateway will run the command with root privileges (look A,AAA query):<br>
+            <img src="img/2.png" alt="capture"><br><br>  </p>
+            <h5 id="-note-that-gateway-used-linux-device-as-gateway-for-easier-capturing-network-flow-and-evidences-"><em>Note that gateway used linux device as gateway for easier capturing network flow and evidences</em></h5>
+            <p>Gateway -&gt; Default Gateway (Linux) -&gt; Internet</p>
+            <h4 id="remediation">Remediation</h4>
+            <ul>
+            <li>Enable and require API authentication (if possible in your version)</li>
+            <li>Monitor traffic to gateway API</li>
+            <li>Patch to the highest possible version availaible on <a href="https://www.cassianetworks.com/">Cassia Networks</a></li>
+            </ul>            
+        </div>
+    </div>
+</body>
+
+</html>
