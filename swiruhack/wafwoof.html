@@ -155,7 +155,7 @@
                     // Print response
                     if (response.ok) {
                         const data = await response.json();
-                        document.getElementById('response').innerHTML = `<pre>${data}</pre>`;
+                        document.getElementById('response').innerHTML = `<pre>${data.target}<br>${data.status}<br>${data.solution}</pre>`;
                     } else {
                         console.error('HTTP-Error: ' + response.status);
                     }
