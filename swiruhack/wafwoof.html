@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>SwiruHack online</title>
+    <title>SwiruHack online WafW00f</title>
     <style>
         /* Use a monospaced font for the body text */
         body {
@@ -119,6 +119,7 @@
 
             <input type="text" id="field1" placeholder="Enter URL">
             <button id="button1">Check WAF</button>
+            <div id="response"></div>
             
             <script>
                 // Function to validate URL
@@ -139,6 +140,7 @@
                     // Check if URL is valid
                     if (!isValidURL(url)) {
                         console.error('Invalid URL');
+                        alert("Invalid URL.")
                         return;
                     }
             
@@ -152,8 +154,8 @@
                     });
                     // Print response
                     if (response.ok) {
-                        const jsonResponse = await response.json();
-                        console.log(jsonResponse);
+                        const data = await response.json();
+                        document.getElementById('response').innerHTML = `<pre>${data}</pre>`;
                     } else {
                         console.error('HTTP-Error: ' + response.status);
                     }
