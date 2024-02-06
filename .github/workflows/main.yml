@@ -41,7 +41,14 @@ jobs:
 
   # DAST
     - name: Dastardly Scan Action
-      uses: PortSwigger/dastardly-github-action@v1.0.0
+      uses: PortSwigger/dastardly-github-action@main
       with:
         target-url: 'https://blog.kscsc.online'
+
+    - name: Publish Test Report
+      if: always()
+      uses: mikepenz/action-junit-report@v3
+      with:
+        report_paths: '**/dastardly-report.xml'
+        require_tests: true
 
