@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
+
 <head>
     <title>SwiruHack online</title>
     <style>
@@ -17,6 +18,7 @@
             0% {
                 filter: blur(10px);
             }
+
             100% {
                 filter: blur(0px);
             }
@@ -86,6 +88,7 @@
             grid-template-columns: max-content;
             grid-template-rows: auto;
             grid-gap: 20px;
+            
         }
 
         /* Style the grid items */
@@ -95,14 +98,26 @@
             color: whitesmoke;
             text-align: left;
             font-size: 1.25em;
+            max-width: 80vw;
+            max-height: 100vh;
+            width: auto;
+            height: auto;
+        }
+
+        img {
+            max-width: 80vw;
+            max-height: 100vh;
+            width: auto;
+            height: auto;
         }
     </style>
 </head>
 
 <body>
     <h1>CVES</h1>
-    <p>Common Vulnerabilities and Exposures<br>CVE MITRE: 
-<a href=https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-31445>CVE-2023-31445</a></p>
+    <p>Common Vulnerabilities and Exposures<br>CVE MITRE:
+        <a href=https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-31445>CVE-2023-31445</a>
+    </p>
     <!-- Use ASCII art to create a logo -->
     <div class="sign">
         <pre onclick="window.location='/'">
@@ -117,83 +132,102 @@
     <!-- Create a grid of items using the .grid and .grid-item classes -->
     <div class="grid">
         <div class="md">
-		<h1 id="cve-2023-31445-unprivileged-information-disclosure">CVE-2023-31445-Unprivileged-Information-Disclosure</h1>
-<p>Repository contains description for CVE-2023-31445 discovered by Dodge Industrial Team for Dodge OPTIFY platfrom.</p>
-<hr>
-<p>CVE ID: CVE-2023-31445<br>Vendor: Cassia Networks<br>Product: Access Controller<br>Version: Cassia-AC-2.1.1.2203171453  </p>
-<hr>
-<p>Vulnerability: Unprivileged Information Disclosure<br>Affected: logs, users data<br>Decription: Read-only users have ability to enumerate all other users 
-<br>and disclose information as e-mail addresses, phone numbers and privileges of all other users. 
-<br>This may lead to further steps as targeted e-mail campaigns and social engineering attacks.<br>Status: Confirmed by vendor, Fixed<br>Version Patched: Cassia-AC-2.1.1.2207292123</p>
-<hr>
-<h4 id="details">Details</h4>
-<p>Administrator account has privileges to see data of all of the users registered in Access Controller as example:
-<br><img src="img/image1.jpg" alt=""></p>
-<p>Read-Only user can only view himself:
-<br><img src="img/image2.jpg" alt=""></p>
-<p>Edit Account invokes /admin/(userId)/edit, wher Id is the UserId:
-<br><img src="img/image3.jpg" alt="">
-<br><img src="img/image4.jpg" alt=""></p>
-<p>There is no validation between permissions and actual userId that Read-Only user uses in the request.<br>It allows Read-Only user to enumerate all other users without administrative access.  This is considered as Unprivileged Information Disclosure.<br>It can be achieved by bruteforcing.<br>More of that, Id can be easily guessed as it is UNIX time format of exact user creation
-date - what can be obtained<br>
-from the logs which are all also visible for Read-Only user.  </p>
-<hr>
-<h4 id="exploitation">Exploitation</h4>
-<p>Every of the activity is done from tester (Read-Only user) context.
-1) Gather information about account creation from logs
-<br><img src="img/image5.jpg" alt="">  </p>
-<p>2) Convert data to UNIX format
-<br><img src="img/image6.jpg" alt="">  </p>
-<p>Table from PoC</p>
-<table>
-<thead>
-<tr>
-<th>Username</th>
-<th>Time Log</th>
-<th>Time UNIX</th>
-<th>Permissions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>User1</td>
-<td>2022-07-21T05:25:31.054-04:00</td>
-<td>1658395531054</td>
-<td>Readonly</td>
-</tr>
-<tr>
-<td>User2</td>
-<td>2022-07-21T05:26:08.660-04:00</td>
-<td>1658395568660</td>
-<td>Readonly</td>
-</tr>
-<tr>
-<td>User3</td>
-<td>2022-07-21T05:26:24.669-04:00</td>
-<td>1658395584669</td>
-<td>Readonly</td>
-</tr>
-<tr>
-<td>Testadmin</td>
-<td>2022-07-21T06:56:11.189-04:00</td>
-<td>1658400971189</td>
-<td>Administrator</td>
-</tr>
-</tbody>
-</table>
-<p>Note! There might be little variation between UNIX timestamp and assigned Id (+-1)<br>it depends on the speed of the server and current occupation of processing resources.</p>
-<p>3) Enumerate API endpoint<br>Burp was used in this PoC<br><img src="img/image7.jpg" alt="">
-<br><img src="img/image8.jpg" alt=""></p>
-<p>4) Run enumeration and gather outcomes</p>
-<p>
-<br><img src="img/image9.jpg" alt="">
-<br><img src="img/image10.jpg" alt="">
-<br><img src="img/image11.jpg" alt="">
-<br><img src="img/image12.jpg" alt=""></p>
-<h4 id="remediation">Remediation</h4>
-<ul>
-<li>Patch to the highest possible version availaible on <a href="https://www.cassianetworks.com/">Cassia Networks</a></li>
-</ul>
+            <h1 id="cve-2023-31445-unprivileged-information-disclosure">
+                CVE-2023-31445-Unprivileged-Information-Disclosure</h1>
+            <p>Repository contains description for CVE-2023-31445 discovered by Dodge Industrial Team for Dodge OPTIFY
+                platfrom.</p>
+            <hr>
+            <p>CVE ID: CVE-2023-31445<br>Vendor: Cassia Networks<br>Product: Access Controller<br>Version:
+                Cassia-AC-2.1.1.2203171453 </p>
+            <hr>
+            <p>Vulnerability: Unprivileged Information Disclosure<br>Affected: logs, users data<br>Decription: Read-only
+                users have ability to enumerate all other users
+                <br>and disclose information as e-mail addresses, phone numbers and privileges of all other users.
+                <br>This may lead to further steps as targeted e-mail campaigns and social engineering
+                attacks.<br>Status: Confirmed by vendor, Fixed<br>Version Patched: Cassia-AC-2.1.1.2207292123
+            </p>
+            <hr>
+            <h4 id="details">Details</h4>
+            <p>Administrator account has privileges to see data of all of the users registered in Access Controller as
+                example:
+                <br><img src="img/image1.jpg" alt="">
+            </p>
+            <p>Read-Only user can only view himself:
+                <br><img src="img/image2.jpg" alt="">
+            </p>
+            <p>Edit Account invokes /admin/(userId)/edit, wher Id is the UserId:
+                <br><img src="img/image3.jpg" alt="">
+                <br><img src="img/image4.jpg" alt="">
+            </p>
+            <p>There is no validation between permissions and actual userId that Read-Only user uses in the
+                request.<br>It allows Read-Only user to enumerate all other users without administrative access. This is
+                considered as Unprivileged Information Disclosure.<br>It can be achieved by bruteforcing.<br>More of
+                that, Id can be easily guessed as it is UNIX time format of exact user creation
+                date - what can be obtained<br>
+                from the logs which are all also visible for Read-Only user. </p>
+            <hr>
+            <h4 id="exploitation">Exploitation</h4>
+            <p>Every of the activity is done from tester (Read-Only user) context.
+                1) Gather information about account creation from logs
+                <br><img src="img/image5.jpg" alt="">
+            </p>
+            <p>2) Convert data to UNIX format
+                <br><img src="img/image6.jpg" alt="">
+            </p>
+            <p>Table from PoC</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Time Log</th>
+                        <th>Time UNIX</th>
+                        <th>Permissions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>User1</td>
+                        <td>2022-07-21T05:25:31.054-04:00</td>
+                        <td>1658395531054</td>
+                        <td>Readonly</td>
+                    </tr>
+                    <tr>
+                        <td>User2</td>
+                        <td>2022-07-21T05:26:08.660-04:00</td>
+                        <td>1658395568660</td>
+                        <td>Readonly</td>
+                    </tr>
+                    <tr>
+                        <td>User3</td>
+                        <td>2022-07-21T05:26:24.669-04:00</td>
+                        <td>1658395584669</td>
+                        <td>Readonly</td>
+                    </tr>
+                    <tr>
+                        <td>Testadmin</td>
+                        <td>2022-07-21T06:56:11.189-04:00</td>
+                        <td>1658400971189</td>
+                        <td>Administrator</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Note! There might be little variation between UNIX timestamp and assigned Id (+-1)<br>it depends on the
+                speed of the server and current occupation of processing resources.</p>
+            <p>3) Enumerate API endpoint<br>Burp was used in this PoC<br><img src="img/image7.jpg" alt="">
+                <br><img src="img/image8.jpg" alt="">
+            </p>
+            <p>4) Run enumeration and gather outcomes</p>
+            <p>
+                <br><img src="img/image9.jpg" alt="">
+                <br><img src="img/image10.jpg" alt="">
+                <br><img src="img/image11.jpg" alt="">
+                <br><img src="img/image12.jpg" alt="">
+            </p>
+            <h4 id="remediation">Remediation</h4>
+            <ul>
+                <li>Patch to the highest possible version availaible on <a href="https://www.cassianetworks.com/">Cassia
+                        Networks</a></li>
+            </ul>
 
         </div>
     </div>
