@@ -89,14 +89,14 @@ a:any-link {
     color: whitesmoke;
     text-align: left;
     font-size: 1.25em;
-    max-width: 80vw;
-    max-height: 100vh;
+    max-width: 90vw;
     width: auto;
     height: auto;
 }
 
 img {
-    max-width: 80vw;
+    align-self: center;
+    max-width: 90vw;
     max-height: 100vh;
     width: auto;
     height: auto;
