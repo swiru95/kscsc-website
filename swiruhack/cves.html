@@ -1,129 +1,36 @@
 <!DOCTYPE html>
 <html>
-<meta charset="utf-8">
 <head>
+    <meta charset="utf-8">
     <title>SwiruHack online</title>
-    <style>
-        /* Use a monospaced font for the body text */
-        body {
-            font-family: monospace;
-            color: whitesmoke;
-            background-color: #222;
-            align-self: center;
-            text-align: center;
-        }
-
-        @keyframes appear {
-            0% {
-                filter: blur(10px);
-            }
-            100% {
-                filter: blur(0px);
-            }
-        }
-
-
-        @keyframes shake {
-            0% {
-                transform: translateX(0);
-                filter: blur(2px);
-            }
-
-            10% {
-                filter: blur(3px);
-            }
-
-            20% {
-                filter: blur(2px);
-            }
-
-            30% {
-                filter: blur(1px);
-            }
-
-            40% {
-                filter: blur(0px);
-            }
-
-            60% {
-                transform: translateX(10px);
-            }
-
-            70% {
-                transform: translateX(-10px);
-            }
-
-            80% {
-                transform: translateX(10px);
-            }
-
-            90% {
-                transform: translateX(-10px);
-                filter: blur(1px);
-            }
-
-            100% {
-                transform: translateX(0);
-                filter: blur(2px);
-            }
-        }
-
-        .sign {
-            animation: shake 2s linear infinite;
-
-            /* other style rules */
-        }
-
-        a:any-link {
-            color: azure;
-        }
-
-        /* Create a grid layout using CSS Grid */
-        .grid {
-            animation: appear 1s linear forwards;
-            align-self: center;
-            justify-content: center;
-            display: grid;
-            grid-template-columns: 20%;
-            grid-template-rows: auto;
-            grid-gap: 20px;
-        }
-
-        /* Style the grid items */
-        .cves {
-            align-self: center;
-            background-color: rgb(1, 48, 11);
-            color: whitesmoke;
-            text-align: center;
-            font-size: 1em;
-        }
-    </style>
+    <link rel="stylesheet" href="styles/styles-cve.css">
 </head>
 
 <body>
     <h1>SwiruHack Online</h1>
     <p>This is an official blog.</p>
-    <!-- Use ASCII art to create a logo -->
     <div class="sign">
         <pre onclick="window.location='/'">
             ◖ ▀▄▀ 🢇 ▄█▀
         🞮 ◗
-    </pre>
+        </pre>
     </div>
-    <!-- Create a grid of items using the .grid and .grid-item classes -->
     <div class="grid">
-        <div class="cves">
+        <div class="cve-item">
             <a href="cves/202331445/md.html">CVE-2023-31445</a>
         </div>
-        <div class="cves">
+        <div class="cve-item">
             <a href="cves/202331446/md.html">CVE-2023-31446</a>
         </div>
-        <div class="cves">
+        <div class="cve-item">
             <a href="cves/202335793/md.html">CVE-2023-35893</a>
         </div>
-        <div class="cves">
+        <div class="cve-item">
             <a href="cves/202335794/md.html">CVE-2023-35894</a>
         </div>
+    </div>
+    <div class="footer">
+        <a href="https://contact.kscsc.online">$ @ contact me</a>
     </div>
 </body>
 </html>

@@ -1,103 +1,162 @@
-/* Use a monospaced font for the body text */
-body {
-    font-family: monospace;
-    color: whitesmoke;
-    background-color: #222;
-    align-self: center;
-    text-align: center;
-}
+/* Inherit base styles */
+@import url('styles.css');
 
-@keyframes appear {
-    0% {
-        filter: blur(10px);
-    }
-    100% {
-        filter: blur(0px);
-    }
-}
-
-@keyframes shake {
-    0% {
-        transform: translateX(0);
-        filter: blur(2px);
-    }
-
-    10% {
-        filter: blur(3px);
-    }
-
-    20% {
-        filter: blur(2px);
-    }
-
-    30% {
-        filter: blur(1px);
-    }
-
-    40% {
-        filter: blur(0px);
-    }
-
-    60% {
-        transform: translateX(10px);
-    }
-
-    70% {
-        transform: translateX(-10px);
-    }
-
-    80% {
-        transform: translateX(10px);
-    }
-
-    90% {
-        transform: translateX(-10px);
-        filter: blur(1px);
-    }
-
-    100% {
-        transform: translateX(0);
-        filter: blur(2px);
-    }
-}
-
-.sign {
-    animation: shake 2s linear infinite;
-
-    /* other style rules */
-}
-
-a:any-link {
-    color: azure;
-}
-
-/* Create a grid layout using CSS Grid */
-.grid {
-    animation: appear 1s linear forwards;
-    align-self: center;
-    justify-content: center;
-    display: grid;
-    grid-template-columns: max-content;
-    grid-template-rows: auto;
-    grid-gap: 20px;
-}
-
-/* Style the grid items */
+/* Container for CVE content */
 .md {
-    align-self: center;
-    background-color: rgb(1, 48, 11);
-    color: whitesmoke;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #33ff00;
     text-align: left;
-    font-size: 1.25em;
-    max-width: 90vw;
-    width: auto;
-    height: auto;
+    padding-bottom: 60px; /* Adjust based on footer height */
 }
 
-img {
-    align-self: center;
-    max-width: 90vw;
-    max-height: 100vh;
-    width: auto;
+/* Headers */
+.md h1, .md h2, .md h3, .md h4, .md h5 {
+    color: #33ff00;
+    margin: 1em 0 0.5em 0;
+    text-align: left;
+}
+
+/* Paragraphs and text */
+.md p {
+    margin-bottom: 1em;
+    line-height: 1.6;
+    text-align: left;
+}
+
+/* Links */
+.md a {
+    color: #33ff00;
+    text-decoration: none;
+}
+
+.md a:hover {
+    text-shadow: 0 0 10px rgba(51, 255, 0, 0.5);
+}
+
+/* Images */
+.md img {
+    max-width: 100%;
     height: auto;
+    display: block;
+    margin: 20px 0;
+    border: 1px solid #33ff00;
+    padding: 5px;
+    background-color: rgba(0, 20, 0, 0.3);
+}
+
+/* Tables */
+.md table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: rgba(0, 20, 0, 0.3);
+}
+
+.md th, .md td {
+    border: 1px solid #33ff00;
+    padding: 8px;
+    text-align: left;
+}
+
+.md th {
+    background-color: rgba(51, 255, 0, 0.1);
+}
+
+/* Code blocks and pre */
+.md pre, .md code {
+    background-color: rgba(0, 20, 0, 0.3);
+    border: 1px solid #33ff00;
+    padding: 15px;
+    overflow-x: auto;
+    margin: 20px 0;
+    font-family: monospace;
+}
+
+/* Blockquotes */
+.md blockquote {
+    border-left: 3px solid #33ff00;
+    margin: 20px 0;
+    padding-left: 20px;
+    font-style: italic;
+}
+
+/* Lists */
+.md ul, .md ol {
+    padding-left: 20px;
+    margin: 1em 0;
+}
+
+/* Horizontal rules */
+.md hr {
+    border: none;
+    border-top: 1px solid #33ff00;
+    margin: 20px 0;
+}
+
+/* Grid adjustments */
+.grid {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Header and title adjustments */
+body > h1, body > p {
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+/* Sign (logo) adjustments */
+.sign {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.sign pre {
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #0c0c0c;
+    border-top: 1px solid #33ff00;
+    font-size: 0.8em;
+    text-align: center;
+    z-index: 100;
+}
+
+.footer a {
+    color: #33ff00;
+    text-decoration: none;
+    border-right: 2px solid #33ff00;
+    padding-right: 5px;
+    animation: 
+        typing 1s steps(20) forwards,
+        blink 0.5s steps(1) infinite;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 0;
+    min-width: 120px;
+}
+
+.footer a:hover {
+    text-shadow: 0 0 10px rgba(51, 255, 0, 0.5);
+}
+
+/* Blink animation for footer */
+@keyframes blink {
+    50% { border-color: transparent }
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
 }

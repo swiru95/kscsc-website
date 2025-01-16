@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
+
 <head>
     <title>SwiruHack online</title>
     <link rel="stylesheet" href="../../styles/styles-cve.css">
@@ -8,8 +9,9 @@
 
 <body>
     <h1>CVES</h1>
-    <p>Common Vulnerabilities and Exposures<br>CVE MITRE: 
-<a href=https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-31446>CVE-2023-31446</a></p>
+    <p>Common Vulnerabilities and Exposures<br>CVE MITRE:
+        <a href=https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-31446>CVE-2023-31446</a>
+    </p>
     <!-- Use ASCII art to create a logo -->
     <div class="sign">
         <pre onclick="window.location='/'">
@@ -25,40 +27,59 @@
     <div class="grid">
         <div class="md">
             <h1 id="cve-2023-31446-remote-code-execution">CVE-2023-31446-Remote-Code-Execution</h1>
-            <p>Repository contains description for CVE-2023-31446 discovered by Dodge Industrial Team for Dodge OPTIFY platfrom.</p>
+            <p>Repository contains description for CVE-2023-31446 discovered by Dodge Industrial Team for Dodge OPTIFY
+                platfrom.</p>
             <hr>
             <p>CVE ID: CVE-2023-31446
                 <br>Vendor: Cassia Networks
                 <br>Product: Cassia Gateway Firmware
-                <br>Version: &lt;2.1.1.230309*</p>
+                <br>Version: &lt;2.1.1.230309*
+            </p>
             <hr>
             <p>Vulnerability: Remote Code Execution/Remote Code Injection
                 <br>Affected: gateways
                 <br>Decription: <em>queueUrl</em> parameter in <em>/bypass/config</em> is not sanitized.<br>
-                This leads to injecting bash code and executing it with root privileges on device startup.<br>Status: Confirmed by vendor, Fixed<br>Version Patched: 2.1.1.230720*</p>
+                This leads to injecting bash code and executing it with root privileges on device startup.<br>Status:
+                Confirmed by vendor, Fixed<br>Version Patched: 2.1.1.230720*
+            </p>
             <hr>
             <h4 id="details">Details</h4>
-            <p>Cassia has implemented in the past function that allows Gateways to push bluetooth scan data to the SQS Amazon Services.<br>
+            <p>Cassia has implemented in the past function that allows Gateways to push bluetooth scan data to the SQS
+                Amazon Services.<br>
                 The settings for mentioned functionality could be set by API endpoint:</p>
             <blockquote>
-            <p>http://<ip>/bypass/config?type=sqs&amp;keyId=&lt;&quot;keyId&quot;&gt;&amp;key=&lt;&quot;keysecret&quot;&gt;&amp;queueUrl=&lt;&quot;queueServiceUrl&quot;&gt;  </p>
+                <p>http://<ip>
+                        /bypass/config?type=sqs&amp;keyId=&lt;&quot;keyId&quot;&gt;&amp;key=&lt;&quot;keysecret&quot;&gt;&amp;queueUrl=&lt;&quot;queueServiceUrl&quot;&gt;
+                </p>
             </blockquote>
-            <p>Based on the investigation the SQS feature starts the service on the boot time of the device.<br>Service loads configuration file, where mentioned endpoint overwrite the settings.<br>Service after loading specified URL runs nslookup from root bash perspective what allows to run any command embeded into URL parameter.<br>The access to the endpoint is not authenticated by default. More of that the feature was not described in the official Cassia documentation.</p>
+            <p>Based on the investigation the SQS feature starts the service on the boot time of the device.<br>Service
+                loads configuration file, where mentioned endpoint overwrite the settings.<br>Service after loading
+                specified URL runs nslookup from root bash perspective what allows to run any command embeded into URL
+                parameter.<br>The access to the endpoint is not authenticated by default. More of that the feature was
+                not described in the official Cassia documentation.</p>
             <hr>
             <h4 id="exploitation">Exploitation</h4>
             <p>Attacker can embed bash command ${id} into <em>queueUrl</em> parameter:<br>
-            <img src="img/1.png" alt="query"><br><br>  </p>
+                <img src="img/1.png" alt="query"><br><br>
+            </p>
             <p>After rebooting device, gateway will run the command with root privileges (look A,AAA query):<br>
-            <img src="img/2.png" alt="capture"><br><br>  </p>
-            <h5 id="-note-that-gateway-used-linux-device-as-gateway-for-easier-capturing-network-flow-and-evidences-"><em>Note that gateway used linux device as gateway for easier capturing network flow and evidences</em></h5>
+                <img src="img/2.png" alt="capture"><br><br>
+            </p>
+            <h5 id="-note-that-gateway-used-linux-device-as-gateway-for-easier-capturing-network-flow-and-evidences-">
+                <em>Note that gateway used linux device as gateway for easier capturing network flow and evidences</em>
+            </h5>
             <p>Gateway -&gt; Default Gateway (Linux) -&gt; Internet</p>
             <h4 id="remediation">Remediation</h4>
             <ul>
-            <li>Enable and require API authentication (if possible in your version)</li>
-            <li>Monitor traffic to gateway API</li>
-            <li>Patch to the highest possible version availaible on <a href="https://www.cassianetworks.com/">Cassia Networks</a></li>
-            </ul>            
+                <li>Enable and require API authentication (if possible in your version)</li>
+                <li>Monitor traffic to gateway API</li>
+                <li>Patch to the highest possible version availaible on <a href="https://www.cassianetworks.com/">Cassia
+                        Networks</a></li>
+            </ul>
         </div>
+    </div>
+    <div class="footer">
+        <a href="https://contact.kscsc.online">$ @ contact me</a>
     </div>
 </body>
 

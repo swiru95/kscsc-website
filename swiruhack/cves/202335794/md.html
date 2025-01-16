@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
+
 <head>
     <title>SwiruHack online</title>
     <link rel="stylesheet" href="../../styles/styles-cve.css">
@@ -8,8 +9,9 @@
 
 <body>
     <h1>CVES</h1>
-    <p>Common Vulnerabilities and Exposures<br>CVE MITRE: 
-<a href=https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-35794>CVE-2023-35794</a></p>
+    <p>Common Vulnerabilities and Exposures<br>CVE MITRE:
+        <a href=https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-35794>CVE-2023-35794</a>
+    </p>
     <!-- Use ASCII art to create a logo -->
     <div class="sign">
         <pre onclick="window.location='/'">
@@ -25,12 +27,13 @@
     <div class="grid">
         <div class="md">
             <h1 id="cve-2023-35794-webssh-hijacking">CVE-2023-35794-WebSSH-Hijacking</h1>
-            <p>Repository contains description for CVE-2023-35794 discovered by Dodge Industrial Team for Dodge OPTIFY platfrom.</p>
+            <p>Repository contains description for CVE-2023-35794 discovered by Dodge Industrial Team for Dodge OPTIFY
+                platfrom.</p>
             <hr>
             <p>CVE ID: CVE-2023-35794
                 <br>Vendor: Cassia Networks
                 <br>Product: Access Controller
-                <br>Version: Cassia-AC-2.1.1.2303271039  
+                <br>Version: Cassia-AC-2.1.1.2303271039
             </p>
             <hr>
             <p>Vulnerability: Incorrect Access Control
@@ -45,7 +48,8 @@
                 WebSSH2 Is a web SSH Client which uses ssh2, socket.io, xterm.js, and express.<br>
                 A bare bones example of an HTML5 web-based terminal emulator and SSH client.<br>
                 It uses SSH2 as a client on a host to proxy a Websocket/Socket.io connection to a SSH2 server.</p>
-            <p>When a session of WebSSH is established with Gateway Device any external user can hijack it without any authentication and authorization.</p>
+            <p>When a session of WebSSH is established with Gateway Device any external user can hijack it without any
+                authentication and authorization.</p>
             <p>Session establishment is done via GET request to proper<br>
             <blockquote>
                 <code>/ap/remote/&lt;mac&gt;?ssh_port=&lt;ac-rev-ssh-port&gt;</code>
@@ -64,30 +68,38 @@
             to the choosen device.<br>
             <br><img src="img/3.png" alt=""><br>
             <br><img src="img/4.png" alt=""><br><br>
-            This allows unathorized to Access Controller portal User to hijack already existing SSH session<br> 
+            This allows unathorized to Access Controller portal User to hijack already existing SSH session<br>
             with only knowing SSH username and password (note that this commonly may be default<br>
             <code>cassia:cassia-&lt;last-mac-6-digits&gt;</code>).</p>
             <hr>
             <h4 id="exploitation">Exploitation</h4>
-            <p>An attacker may use <a href="https://github.com/Dodge-MPTC/CVE-2023-35793-CSRF-On-Web-SSH">CVE-2023-35793</a> to trick any athenticated user<br>
-            to initiate a session to any device connected to the AC (note that the user does not need to login into the gateway,<br> 
-            the session itself will be initiated with only exploiting CVE-2023-35793 CSRF). Then using this vulnerability and knowing the MAC address<br>
-            an attacker may easily obtain access to the device through WebSSH.</p>
-            <p>Lets assume an attacker triggered someone and the session is established to the gateway where the default credentials are used.</p>
+            <p>An attacker may use <a
+                    href="https://github.com/Dodge-MPTC/CVE-2023-35793-CSRF-On-Web-SSH">CVE-2023-35793</a> to trick any
+                athenticated user<br>
+                to initiate a session to any device connected to the AC (note that the user does not need to login into
+                the gateway,<br>
+                the session itself will be initiated with only exploiting CVE-2023-35793 CSRF). Then using this
+                vulnerability and knowing the MAC address<br>
+                an attacker may easily obtain access to the device through WebSSH.</p>
+            <p>Lets assume an attacker triggered someone and the session is established to the gateway where the default
+                credentials are used.</p>
             <p>1) Attacker just opens the web browser and enters default credentials for known device.<br>
-            <br><img src="img/5.png" alt=""><br><br>
-            2) Attacker knowing which device were triggered provides default credentials (commonly these are not being changed)<br>
-            <br><img src="img/6.png" alt=""><br><br>
-            3) Attacker is authenticated to device LXC container as a user which has root rights by default<br>
-            <br><img src="img/7.png" alt=""></p>
+                <br><img src="img/5.png" alt=""><br><br>
+                2) Attacker knowing which device were triggered provides default credentials (commonly these are not
+                being changed)<br>
+                <br><img src="img/6.png" alt=""><br><br>
+                3) Attacker is authenticated to device LXC container as a user which has root rights by default<br>
+                <br><img src="img/7.png" alt="">
+            </p>
             <h4 id="remediation">Remediation</h4>
             <ul>
-            <li>Patch to the highest possible version availaible on <a href="https://www.cassianetworks.com/">Cassia Networks</a></li>
+                <li>Patch to the highest possible version availaible on <a href="https://www.cassianetworks.com/">Cassia
+                        Networks</a></li>
             </ul>
-            
-
-
         </div>
+    </div>
+    <div class="footer">
+        <a href="https://contact.kscsc.online">$ @ contact me</a>
     </div>
 </body>
 

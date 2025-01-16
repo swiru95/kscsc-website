@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
+
 <head>
     <title>SwiruHack online</title>
     <link rel="stylesheet" href="../../styles/styles-cve.css">
@@ -8,8 +9,9 @@
 
 <body>
     <h1>CVES</h1>
-    <p>Common Vulnerabilities and Exposures<br>CVE MITRE: 
-<a href=https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-35793>CVE-2023-35793</a></p>
+    <p>Common Vulnerabilities and Exposures<br>CVE MITRE:
+        <a href=https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-35793>CVE-2023-35793</a>
+    </p>
     <!-- Use ASCII art to create a logo -->
     <div class="sign">
         <pre onclick="window.location='/'">
@@ -24,46 +26,64 @@
     <!-- Create a grid of items using the .grid and .grid-item classes -->
     <div class="grid">
         <div class="md">
-<h1 id="cve-2023-35793-csrf-on-web-ssh">CVE-2023-35793-CSRF-On-Web-SSH</h1>
-<p>Repository contains description for CVE-2023-35793 discovered by Dodge Industrial Team for Dodge OPTIFY platfrom.</p>
-<hr>
-<p>CVE ID: CVE-2023-35793<br>Vendor: Cassia Networks<br>Product: Access Controller<br>Version: Cassia-AC-2.1.1.2303271039  </p>
-<hr>
-<p>Vulnerability: Cross Site Request Forgery (CSRF)<br>Affected: web ssh, gateways<br>Decription: WebSSH functionality can be intialized by CSRF.<br>Status: Confirmed by vendor, Fixed<br>Version Patched: Cassia-AC-2.1.1.2308181707</p>
-<hr>
-<h4 id="details">Details</h4>
-<p>Cassia uses WebSSH2 by billchurch to initiate SSH sessions from AC to Gateways. WebSSH2 Is a web SSH Client which uses ssh2, socket.io, xterm.js, and express. 
-<br>A bare bones example of an HTML5 web-based terminal emulator and SSH client. It uses SSH2 as a client on a host to proxy a Websocket/Socket.io connection to a SSH2 server.</p>
-<p>When a user is logged into AC it uses <em>ac:ssid</em> cookie with Same Site Strict cookie. </p>
-<p><img src="img/0.png" alt=""></p>
-<p>To Initiate SSH Web session with gateway users send GET request with mac and port number (reverse ssh) without CSRF token used.</p>
-<pre><code>http://<span class="hljs-tag">&lt;<span class="hljs-name">ac-ip</span>&gt;</span>/ap/remote/<span class="hljs-tag">&lt;<span class="hljs-name">mac-addr</span>&gt;</span>?ssh_port=9999
-</code></pre><p><img src="img/1.png" alt="">
-<br><img src="img/11.png" alt=""></p>
-<p>An attacker may trick user by sending him link address. 
-This will trigger SSH session establishment by user (further it reveals that user can be just read-only).</p>
-<hr>
-<h4 id="exploitation">Exploitation</h4>
-<p>Attacker may trick already authenticated user to click link provided in teams chat or email what will result in establishing conncetion to provided device.</p>
-<p>1) User admin is doing some activities on AC:
-<br><img src="img/2.png" alt=""></p>
-<p>2) Attacker knows admin email sends SE profiled message (or post it on ITSM ticket) embedding URL. Admin then may click on link while his browser will start session 
-<br>(note session is persistent - even when user close browser, the session will run already):
-<br><img src="img/3.png" alt=""></p>
-<p>3) Session starts as there is no CSRF Token on other protection used!
-<br>AC sends request to Gateway with provided MAC address to establish reverse SSH
-to AC
-<br>- the attacker may use local port forwading (used in solution) to remotely
-bruteforce SSH access (can be easy when default passwords are used)
-<br><img src="img/4.png" alt="">
-<br><img src="img/5.png" alt=""></p>
-<h4 id="remediation">Remediation</h4>
-<ul>
-<li>Patch to the highest possible version availaible on <a href="https://www.cassianetworks.com/">Cassia Networks</a></li>
-</ul>
-
-
+            <h1 id="cve-2023-35793-csrf-on-web-ssh">CVE-2023-35793-CSRF-On-Web-SSH</h1>
+            <p>Repository contains description for CVE-2023-35793 discovered by Dodge Industrial Team for Dodge OPTIFY
+                platfrom.</p>
+            <hr>
+            <p>CVE ID: CVE-2023-35793<br>Vendor: Cassia Networks<br>Product: Access Controller<br>Version:
+                Cassia-AC-2.1.1.2303271039 </p>
+            <hr>
+            <p>Vulnerability: Cross Site Request Forgery (CSRF)<br>Affected: web ssh, gateways<br>Decription: WebSSH
+                functionality can be intialized by CSRF.<br>Status: Confirmed by vendor, Fixed<br>Version Patched:
+                Cassia-AC-2.1.1.2308181707</p>
+            <hr>
+            <h4 id="details">Details</h4>
+            <p>Cassia uses WebSSH2 by billchurch to initiate SSH sessions from AC to Gateways. WebSSH2 Is a web SSH
+                Client which uses ssh2, socket.io, xterm.js, and express.
+                <br>A bare bones example of an HTML5 web-based terminal emulator and SSH client. It uses SSH2 as a
+                client on a host to proxy a Websocket/Socket.io connection to a SSH2 server.
+            </p>
+            <p>When a user is logged into AC it uses <em>ac:ssid</em> cookie with Same Site Strict cookie. </p>
+            <p><img src="img/0.png" alt=""></p>
+            <p>To Initiate SSH Web session with gateway users send GET request with mac and port number (reverse ssh)
+                without CSRF token used.</p>
+            <pre><code>http://<span class="hljs-tag">&lt;<span class="hljs-name">ac-ip</span>&gt;</span>/ap/remote/<span class="hljs-tag">&lt;<span class="hljs-name">mac-addr</span>&gt;</span>?ssh_port=9999
+</code></pre>
+            <p><img src="img/1.png" alt="">
+                <br><img src="img/11.png" alt="">
+            </p>
+            <p>An attacker may trick user by sending him link address.
+                This will trigger SSH session establishment by user (further it reveals that user can be just
+                read-only).</p>
+            <hr>
+            <h4 id="exploitation">Exploitation</h4>
+            <p>Attacker may trick already authenticated user to click link provided in teams chat or email what will
+                result in establishing conncetion to provided device.</p>
+            <p>1) User admin is doing some activities on AC:
+                <br><img src="img/2.png" alt="">
+            </p>
+            <p>2) Attacker knows admin email sends SE profiled message (or post it on ITSM ticket) embedding URL. Admin
+                then may click on link while his browser will start session
+                <br>(note session is persistent - even when user close browser, the session will run already):
+                <br><img src="img/3.png" alt="">
+            </p>
+            <p>3) Session starts as there is no CSRF Token on other protection used!
+                <br>AC sends request to Gateway with provided MAC address to establish reverse SSH
+                to AC
+                <br>- the attacker may use local port forwading (used in solution) to remotely
+                bruteforce SSH access (can be easy when default passwords are used)
+                <br><img src="img/4.png" alt="">
+                <br><img src="img/5.png" alt="">
+            </p>
+            <h4 id="remediation">Remediation</h4>
+            <ul>
+                <li>Patch to the highest possible version availaible on <a href="https://www.cassianetworks.com/">Cassia
+                        Networks</a></li>
+            </ul>
         </div>
+    </div>
+    <div class="footer">
+        <a href="https://contact.kscsc.online">$ @ contact me</a>
     </div>
 </body>
 
