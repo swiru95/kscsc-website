@@ -200,3 +200,12 @@ body {
 @keyframes blink {
     50% { border-color: transparent }
 }
+
+/* Dodać do stylów CSS */
+* {
+    /* Zapobieganie XSS poprzez style */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
