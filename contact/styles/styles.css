@@ -26,27 +26,29 @@ body {
     grid-template-rows: max-content;
     grid-gap: 20px;
 }
+
 .logos-container {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 40px;
-    height: 150px;
+    height: 100px;
 }
 
 .logo-wrapper {
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
 }
 
 .logo {
     position: absolute;
     top: 0;
     left: 0;
-    width: 150px;
-    height: auto;
+    width: 100px;
+    height: 100px;
     opacity: 0;
+    object-fit: contain;
     filter: grayscale(100%);
     transition: filter 0.3s ease;
 }
@@ -56,49 +58,38 @@ body {
 }
 
 @keyframes fadeInOut {
-    0% {
+    0%, 100% {
         opacity: 0;
         transform: scale(0.9);
     }
-
-    20% {
+    5%, 15% {
         opacity: 1;
         transform: scale(1);
-    }
-
-    80% {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(0.9);
     }
 }
 
 .logo:nth-child(1) {
-    animation: fadeInOut 10s infinite 0s;
+    animation: fadeInOut 18s infinite 0s;
 }
 
 .logo:nth-child(2) {
-    animation: fadeInOut 10s infinite 2s;
+    animation: fadeInOut 18s infinite 3s;
 }
 
 .logo:nth-child(3) {
-    animation: fadeInOut 10s infinite 4s;
+    animation: fadeInOut 18s infinite 6s;
 }
 
 .logo:nth-child(4) {
-    animation: fadeInOut 10s infinite 6s;
+    animation: fadeInOut 18s infinite 9s;
 }
 
 .logo:nth-child(5) {
-    animation: fadeInOut 10s infinite 8s;
+    animation: fadeInOut 18s infinite 12s;
 }
 
 .logo:nth-child(6) {
-    animation: fadeInOut 10s infinite 10s;
+    animation: fadeInOut 18s infinite 15s;
 }
 
 .image {
