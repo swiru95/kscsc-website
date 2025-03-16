@@ -11,9 +11,6 @@ on:
 
 env:
   SA_NAME: ${{ vars.SA_NAME }}
-  CDN_PROFILE_NAME: ${{ vars.CDN_PROFILE_NAME }}
-  CDN_ENDPOINT_CONTACT: ${{ vars.CDN_ENDPOINT_CONTACT }}
-  CDN_ENDPOINT_BLOG: ${{ vars.CDN_ENDPOINT_BLOG }}
   RESOURCE_GROUP: ${{ vars.RESOURCE_GROUP }}
 
 jobs:
