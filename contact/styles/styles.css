@@ -32,64 +32,27 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 40px;
-    height: 100px;
+    gap: 20px;
 }
 
 .logo-wrapper {
-    position: relative;
-    width: 100px;
-    height: 100px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
 .logo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100px;
-    height: 100px;
-    opacity: 0;
-    object-fit: contain;
+    width: 70px;
+    height: 70px;
+    object-fit: scale-down;
     filter: grayscale(100%);
     transition: filter 0.3s ease;
+    background-color: transparent;
+    display: block;
 }
 
 .logo:hover {
     filter: grayscale(0%);
-}
-
-@keyframes fadeInOut {
-    0%, 100% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    5%, 15% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.logo:nth-child(1) {
-    animation: fadeInOut 18s infinite 0s;
-}
-
-.logo:nth-child(2) {
-    animation: fadeInOut 18s infinite 3s;
-}
-
-.logo:nth-child(3) {
-    animation: fadeInOut 18s infinite 6s;
-}
-
-.logo:nth-child(4) {
-    animation: fadeInOut 18s infinite 9s;
-}
-
-.logo:nth-child(5) {
-    animation: fadeInOut 18s infinite 12s;
-}
-
-.logo:nth-child(6) {
-    animation: fadeInOut 18s infinite 15s;
 }
 
 .image {
