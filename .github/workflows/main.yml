@@ -40,7 +40,7 @@ jobs:
     - name: AWS Login
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-region: us-east-2
+        aws-region: ${{ secrets.AWS_REGION }}
         role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubS3ContentDeployment
         role-session-name: KSCSC-GitHub-Deployment
     - name: STS verify
