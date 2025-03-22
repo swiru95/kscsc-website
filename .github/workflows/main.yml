@@ -49,6 +49,7 @@ jobs:
 
   # DAST
   DastardlyScan:
+    needs: Deployment
     runs-on: ubuntu-latest
     steps:
     - name: Dastardly Scan Action
