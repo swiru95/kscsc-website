@@ -14,7 +14,7 @@ env:
   RESOURCE_GROUP: ${{ vars.RESOURCE_GROUP }}
 
 jobs:
-  build:
+  Deployment:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -37,7 +37,21 @@ jobs:
             az logout
       if: always()
 
+    - name: AWS Login
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: us-east-2
+        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubS3ContentDeployment
+        role-session-name: KSCSC-GitHub-Deployment
+    - name: STS verify
+      run: |
+        aws sts get-caller-identity
+
+
   # DAST
+  DastardlyScan:
+    runs-on: ubuntu-latest
+    steps:
     - name: Dastardly Scan Action
       uses: PortSwigger/dastardly-github-action@main
       with:
