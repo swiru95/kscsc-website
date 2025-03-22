@@ -38,10 +38,14 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
         role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubS3ContentDeployment
         role-session-name: KSCSC-GitHub-Deployment
-    - name: STS verify
-      run: |
-        aws sts get-caller-identity
 
+    - name: Upload to S3 (Contact)
+      run:
+        aws s3 sync ./contact/ s3://${{ env.SA_BUCKET }}/contact/ --delete
+
+    - name: Upload to S3 (Swiruhack)
+      run: |
+        aws s3 sync ./swiruhack/ s3://${{ env.SA_BUCKET }}/swiruhack/ --delete
 
   # DAST
   DastardlyScan:
