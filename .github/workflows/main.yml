@@ -31,11 +31,6 @@ jobs:
         inlineScript: |
             az storage blob upload-batch --account-name ${{ env.SA_NAME }} --auth-mode login --overwrite -d '$web/contact' -s ./contact/
             az storage blob upload-batch --account-name ${{ env.SA_NAME }} --auth-mode login --overwrite -d '$web/swiruhack' -s ./swiruhack/ 
-  # Azure logout
-    - name: logout
-      run: |
-            az logout
-      if: always()
 
     - name: AWS Login
       uses: aws-actions/configure-aws-credentials@v4
