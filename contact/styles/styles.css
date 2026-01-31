@@ -58,15 +58,22 @@ body {
 }
 
 .signature {
-    font-size: 5em;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #000;
+    font-size: 4.2em;
+    font-weight: 300;
+    margin-bottom: 18px;
+    color: #111;
+    text-shadow: none;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* moved from inline style in index.html to respect CSP */
 .signature {
-    font-family: 'Dancing Script', cursive;
+    /* Use local/fallback cursive stack; remove reliance on remote Google Fonts to avoid CF font rewrites */
+    font-family: 'Dancing Script', 'Brush Script MT', 'Segoe Script', cursive;
+    font-weight: 300;
 }
 
 .id-card {
