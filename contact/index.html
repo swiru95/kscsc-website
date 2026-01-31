@@ -119,7 +119,7 @@
 
             <div class="badge-card">
                 <div class="badge-iframe-wrap">
-                    <div class="accredible-placeholder" data-accredible-src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/167897675" style="width:150px;height:270px"></div>
+                    <div class="accredible-placeholder" data-accredible-src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/167897675"></div>
                     <noscript>
                         <img class="accredible-badge"
                             src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/167897675"
@@ -135,7 +135,7 @@
 
             <div class="badge-card">
                 <div class="badge-iframe-wrap">
-                    <div class="accredible-placeholder" data-accredible-src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/32115350" style="width:150px;height:270px"></div>
+                    <div class="accredible-placeholder" data-accredible-src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/32115350"></div>
                     <noscript>
                         <img class="accredible-badge"
                             src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/32115350"
@@ -151,8 +151,6 @@
         </div>
     </div>
     <!-- Credly embed blocked by CSP; use local fallback script instead -->
-    <script src="js/embed-fallback.js"></script>
-    <script src="js/slider.js"></script>
     <div id="cooperation" class="collab-section">
         <div class="collab-split"></div>
         <div class="cooperated-with">Cooperated with</div>
@@ -169,6 +167,10 @@
             </div>
         </div>
         <div class="collab-split"></div>
+    <!-- scripts at the end to avoid running before DOM nodes exist -->
+    <script src="js/embed-fallback.js"></script>
+    <script src="js/slider.js"></script>
+    </div>
 </body>
 
 </html>
