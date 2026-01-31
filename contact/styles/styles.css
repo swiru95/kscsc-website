@@ -290,6 +290,16 @@ body {
     background: #fff;
 }
 
+/* Credly fallback badge (generated SVG) - styled same as Accredible images */
+.credly-badge {
+    width: 150px;
+    height: auto;
+    display: inline-block;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    background: #fff;
+}
+
 /* Iframe embeds for Accredible */
 .accredible-embed {
     width: auto;
@@ -312,6 +322,19 @@ body {
     font-weight: 600;
 }
 .badge-fallback-link:hover { text-decoration: underline; }
+
+/* Make fallback links fill the badge area and center their content */
+.badge-iframe-wrap .badge-fallback-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 6px;
+}
+.badge-iframe-wrap .badge-fallback-link svg { margin-right: 8px; flex: 0 0 auto; }
+.badge-iframe-wrap .badge-fallback-link span { font-weight: 700; color: #111; }
 
 .accredible-placeholder { display:inline-block; }
 
