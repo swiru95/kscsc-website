@@ -7,11 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <style>
-        .signature {
-            font-family: 'Dancing Script', cursive;
-        }
-    </style>
+    <!-- moved signature style into styles/styles.css to comply with CSP -->
 </head>
 
 <body>
@@ -123,10 +119,7 @@
 
             <div class="badge-card">
                 <div class="badge-iframe-wrap">
-                    <iframe class="accredible-embed"
-                        src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/167897675"
-                        width="150" height="270" frameborder="0" scrolling="no"
-                        sandbox="allow-same-origin allow-scripts"></iframe>
+                    <div class="accredible-placeholder" data-accredible-src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/167897675" style="width:150px;height:270px"></div>
                     <noscript>
                         <img class="accredible-badge"
                             src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/167897675"
@@ -142,10 +135,7 @@
 
             <div class="badge-card">
                 <div class="badge-iframe-wrap">
-                    <iframe class="accredible-embed"
-                        src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/32115350"
-                        width="150" height="270" frameborder="0" scrolling="no"
-                        sandbox="allow-same-origin allow-scripts"></iframe>
+                    <div class="accredible-placeholder" data-accredible-src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/32115350" style="width:150px;height:270px"></div>
                     <noscript>
                         <img class="accredible-badge"
                             src="https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/32115350"
@@ -160,7 +150,8 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+    <!-- Credly embed blocked by CSP; use local fallback script instead -->
+    <script src="js/embed-fallback.js"></script>
     <script src="js/slider.js"></script>
     <div id="cooperation" class="collab-section">
         <div class="collab-split"></div>

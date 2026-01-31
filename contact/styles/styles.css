@@ -65,6 +65,11 @@ body {
     color: #000;
 }
 
+/* moved from inline style in index.html to respect CSP */
+.signature {
+    font-family: 'Dancing Script', cursive;
+}
+
 .id-card {
     background-color: #E5E4E2; /* Platinum */
     border: 1px solid #ccc;
@@ -296,6 +301,20 @@ body {
     background: #fff;
     display: inline-block;
 }
+
+.badge-fallback-link {
+    display: inline-block;
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 6px;
+    text-decoration: none;
+    color: #111;
+    font-weight: 600;
+}
+.badge-fallback-link:hover { text-decoration: underline; }
+
+.accredible-placeholder { display:inline-block; }
 
 /* Slight responsive scaling on narrow screens */
 @media (max-width: 480px) {
