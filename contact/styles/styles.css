@@ -416,6 +416,59 @@ body {
 }
 
 /* Footer links at bottom of page */
+
+.badge-slider-container {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 18px;
+    height: 400px; /* Adjusted for badge height */
+    position: relative;
+    margin-bottom: 36px;
+}
+
+.badge-slider {
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    animation: badge-scroll 60s linear infinite;
+}
+
+.badge-slider .badge-card {
+    margin-right: 40px;
+}
+
+@keyframes badge-scroll {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.badge-slider-container:before,
+.badge-slider-container:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 160px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.badge-slider-container:before {
+    left: 0;
+    background: linear-gradient(to left, rgba(211,211,211,0), #d3d3d3);
+}
+
+.badge-slider-container:after {
+    right: 0;
+    background: linear-gradient(to right, rgba(211,211,211,0), #d3d3d3);
+}
+
 .site-footer {
     text-align: center;
     padding: 18px 0 36px;
