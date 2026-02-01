@@ -64,17 +64,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         Promise.all(loadPromises).then(() => {
-            // Duplicate the sequence until the total scrollWidth is at least twice the container width
-            let attempts = 0;
-            while (logoSlider.scrollWidth < container.offsetWidth * 2 && attempts < 10) {
-                const currentImgs = Array.from(logoSlider.querySelectorAll('img'));
-                currentImgs.forEach(img => logoSlider.appendChild(img.cloneNode(true)));
-                attempts++;
+            const originalImgs = Array.from(logoSlider.querySelectorAll('img'));
+            if (originalImgs.length === 0) return;
+
+            const originalWidth = logoSlider.scrollWidth;
+            if (originalWidth === 0) return;
+            const containerWidth = container.offsetWidth;
+
+            let numCopies = 1;
+            while (logoSlider.scrollWidth < containerWidth * 2) {
+                originalImgs.forEach(img => logoSlider.appendChild(img.cloneNode(true)));
+                numCopies++;
+            }
+
+            if (numCopies % 2 !== 0) {
+                originalImgs.forEach(img => logoSlider.appendChild(img.cloneNode(true)));
+                numCopies++;
             }
 
             // Set animation duration proportional to content width for constant speed
             const speedPxPerSec = 100; // lower -> slower
-            const distance = logoSlider.scrollWidth / 2; // we animate by half (duplicate content)
+            const distance = logoSlider.scrollWidth / 2;
             const duration = Math.max(10, Math.round(distance / speedPxPerSec));
             logoSlider.style.animationDuration = duration + 's';
         });
@@ -129,23 +139,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         Promise.all(loadPromises).then(() => {
-            // Duplicate the sequence until the total scrollWidth is at least twice the container width
-            let attempts = 0;
-            while (badgeSlider.scrollWidth < badgeContainer.offsetWidth * 2 && attempts < 10) {
-                const currentBadges = Array.from(badgeSlider.querySelectorAll('.badge-card'));
+            const originalBadges = Array.from(badgeSlider.querySelectorAll('.badge-card'));
+            if (originalBadges.length === 0) return;
+
+            const originalWidth = badgeSlider.scrollWidth;
+            if (originalWidth === 0) return;
+            const containerWidth = badgeContainer.offsetWidth;
+
+            let numCopies = 1;
+            while (badgeSlider.scrollWidth < containerWidth * 2) {
                 const clonedBadges = [];
-                currentBadges.forEach(badge => {
+                originalBadges.forEach(badge => {
                     const clone = badge.cloneNode(true);
                     badgeSlider.appendChild(clone);
                     clonedBadges.push(clone);
                 });
                 processBadges(clonedBadges.map(b => b.querySelector('div[data-share-badge-id]')).filter(Boolean));
-                attempts++;
+                numCopies++;
+            }
+
+            if (numCopies % 2 !== 0) {
+                const clonedBadges = [];
+                originalBadges.forEach(badge => {
+                    const clone = badge.cloneNode(true);
+                    badgeSlider.appendChild(clone);
+                    clonedBadges.push(clone);
+                });
+                processBadges(clonedBadges.map(b => b.querySelector('div[data-share-badge-id]')).filter(Boolean));
+                numCopies++;
             }
 
             // Set animation duration proportional to content width for constant speed
             const speedPxPerSec = 100; // lower -> slower
-            const distance = badgeSlider.scrollWidth / 2; // we animate by half (duplicate content)
+            const distance = badgeSlider.scrollWidth / 2;
             const duration = Math.max(10, Math.round(distance / speedPxPerSec));
             badgeSlider.style.animationDuration = duration + 's';
         });
