@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoSlider = document.querySelector('.logo-slider');
     const container = document.querySelector('.logo-slider-container');
     if (logoSlider && container) {
-        const cards = Array.from(logoSlider.querySelectorAll('.collab-card'));
         const imgs = Array.from(logoSlider.querySelectorAll('img'));
 
         // Wait for all images inside cards to load before measuring widths
@@ -78,25 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         Promise.all(loadPromises).then(() => {
-            if (cards.length === 0) return;
-
-            const originalWidth = logoSlider.scrollWidth;
-            if (originalWidth === 0) return;
-            const containerWidth = container.offsetWidth;
-
-            // Clone full .collab-card elements (not bare <img>s) if we need more width
-            let numCopies = 1;
-            while (logoSlider.scrollWidth < containerWidth * 2) {
-                cards.forEach(card => logoSlider.appendChild(card.cloneNode(true)));
-                numCopies++;
-            }
-
-            if (numCopies % 2 !== 0) {
-                cards.forEach(card => logoSlider.appendChild(card.cloneNode(true)));
-                numCopies++;
-            }
-
-            // Set animation duration proportional to content width for constant speed
+            // Cards are already duplicated in the HTML for seamless CSS animation.
+            // Just set animation duration proportional to content width for constant speed.
             const speedPxPerSec = 100; // lower → slower
             const distance = logoSlider.scrollWidth / 2;
             const duration = Math.max(10, Math.round(distance / speedPxPerSec));
