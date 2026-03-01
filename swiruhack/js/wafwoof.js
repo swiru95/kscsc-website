@@ -49,7 +49,12 @@ async function buttonClick() {
             const data = await response.json();
             // Use textContent to prevent XSS
             const pre = document.createElement('pre');
-            pre.textContent = `${data.target}\n${data.status}\n${data.solution}`;
+            var output = '> Target: ' + (data.target || url);
+            output += '\n> Status: ' + (data.status || 'No WAF detected');
+            if (data.solution) {
+                output += '\n> Solution: ' + data.solution;
+            }
+            pre.textContent = output;
             responseEl.textContent = '';
             responseEl.appendChild(pre);
         } else {
