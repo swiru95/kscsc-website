@@ -275,12 +275,6 @@ body.typing-done .grid .wafwoof a span::after {
     color: rgba(51, 255, 0, 0.5);
 }
 
-/* Typing animation - used by footer only */
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-}
-
 /* Footer - terminal status bar */
 .footer {
     position: fixed;
@@ -299,25 +293,17 @@ body.typing-done .grid .wafwoof a span::after {
 .footer a {
     color: #33ff00;
     text-decoration: none;
-    border-right: 2px solid #33ff00;
-    padding-right: 5px;
-    animation: 
-        typing 1s steps(20) forwards,
-        blink 0.5s steps(1) infinite;
     white-space: nowrap;
-    overflow: hidden;
-    display: inline-block;
-    width: 0;
-    min-width: 120px;
+}
+
+.footer a::after {
+    content: '█';
+    animation: cursor-blink 1s step-end infinite;
+    margin-left: 2px;
 }
 
 .footer a:hover {
     text-shadow: 0 0 10px rgba(51, 255, 0, 0.5);
-}
-
-/* Blink animation only for footer */
-@keyframes blink {
-    50% { border-color: transparent }
 }
 
 /* Prevent selection only on ASCII art banner */
