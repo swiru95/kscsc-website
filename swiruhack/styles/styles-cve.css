@@ -118,45 +118,24 @@ body > h1, body > p {
     cursor: pointer;
 }
 
-/* Footer */
-.footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px;
-    background-color: #0c0c0c;
-    border-top: 1px solid #33ff00;
-    font-size: 0.8em;
-    text-align: center;
-    z-index: 100;
+/* CVE item styling */
+.cve-item {
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.footer a {
+.cve-item a {
     color: #33ff00;
     text-decoration: none;
-    border-right: 2px solid #33ff00;
-    padding-right: 5px;
-    animation: 
-        typing 1s steps(20) forwards,
-        blink 0.5s steps(1) infinite;
-    white-space: nowrap;
-    overflow: hidden;
-    display: inline-block;
-    width: 0;
-    min-width: 120px;
+    display: block;
+    padding: 5px;
 }
 
-.footer a:hover {
+.cve-item:hover {
+    border-color: #66ff33;
+    box-shadow: 0 0 15px rgba(51, 255, 0, 0.3);
+}
+
+/* Back navigation link */
+.back-nav a:hover {
     text-shadow: 0 0 10px rgba(51, 255, 0, 0.5);
-}
-
-/* Blink animation for footer */
-@keyframes blink {
-    50% { border-color: transparent }
-}
-
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
 }

@@ -31,20 +31,34 @@ async function buttonClick() {
         return;
     }
 
-    // Send POST request
-    const response = await fetch("https://wafw00f.kscsc.online/api/trigger_waf_woof", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ target: url })
-    });
-    // Print response
-    if (response.ok) {
-        const data = await response.json();
-        document.getElementById('response').innerHTML = `<pre>${data.target}<br>${data.status}<br>${data.solution}</pre>`;
-    } else {
-        console.error('HTTP-Error: ' + response.status);
+    // Show loading state
+    const responseEl = document.getElementById('response');
+    responseEl.textContent = 'Checking WAF...';
+
+    try {
+        // Send POST request
+        const response = await fetch("https://wafw00f.kscsc.online/api/trigger_waf_woof", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ target: url })
+        });
+        // Print response
+        if (response.ok) {
+            const data = await response.json();
+            // Use textContent to prevent XSS
+            const pre = document.createElement('pre');
+            pre.textContent = `${data.target}\n${data.status}\n${data.solution}`;
+            responseEl.textContent = '';
+            responseEl.appendChild(pre);
+        } else {
+            responseEl.textContent = 'HTTP-Error: ' + response.status;
+            console.error('HTTP-Error: ' + response.status);
+        }
+    } catch (error) {
+        responseEl.textContent = 'Network error - service may be unavailable.';
+        console.error('Fetch error:', error);
     }
 }
 

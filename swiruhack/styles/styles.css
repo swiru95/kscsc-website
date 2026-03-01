@@ -5,6 +5,102 @@ body {
     text-align: center;
     text-shadow: 0 0 5px rgba(51, 255, 0, 0.3);
     font-size: 16px;  /* Base font size */
+    padding-bottom: 60px; /* Space for fixed footer */
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* CRT scanlines overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15) 0px,
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+}
+
+/* CRT vignette (dark edges) */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 60%,
+        rgba(0, 0, 0, 0.4) 100%
+    );
+}
+
+/* Subtle CRT flicker */
+@keyframes flicker {
+    0%   { opacity: 0.97; }
+    5%   { opacity: 0.95; }
+    10%  { opacity: 0.98; }
+    15%  { opacity: 0.96; }
+    20%  { opacity: 0.99; }
+    50%  { opacity: 0.97; }
+    80%  { opacity: 0.98; }
+    90%  { opacity: 0.96; }
+    100% { opacity: 0.98; }
+}
+
+body > * {
+    animation: flicker 4s infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0c0c0c;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #33ff00;
+    border-radius: 0;
+    box-shadow: 0 0 8px rgba(51, 255, 0, 0.4);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #66ff33;
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #33ff00 #0c0c0c;
+}
+
+/* Terminal prompt header */
+h1 {
+    font-size: 1.1em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.3em;
+}
+
+/* Subtitle / comment line */
+body > p {
+    font-size: 0.85em;
+    color: rgba(51, 255, 0, 0.6);
+    margin-top: 0;
 }
 
 @keyframes appear {
@@ -94,12 +190,25 @@ body {
     max-width: 800px;
 }
 
-/* Grid items - basic container styling */
+/* Grid items - terminal window styling (hidden until typing.js reveals) */
 .grid > div {
-    padding: 20px;
-    text-align: center;
+    padding: 15px 20px;
+    text-align: left;
     border: 1px solid #33ff00;
     background-color: rgba(0, 20, 0, 0.3);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    opacity: 0;
+}
+
+/* CVE detail pages — always visible (no typing animation) */
+.grid > div.md {
+    opacity: 1;
+}
+
+.grid > div:hover {
+    border-color: #66ff33;
+    box-shadow: 0 0 15px rgba(51, 255, 0, 0.3), inset 0 0 30px rgba(51, 255, 0, 0.05);
 }
 
 /* Regular links without animation */
@@ -108,73 +217,83 @@ body {
     text-decoration: none;
 }
 
-/* Text content in specific sections */
-.whoami text,
-.kiss text,
-.certs text,
-.error text,
-.xrate text {
+/* Text content — hidden initially, typed out by typing.js */
+.whoami > span,
+.kiss > span,
+.certs > span,
+.links > span {
     color: #33ff00;
-    display: inline-block;
-    padding-right: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: typing 2s steps(40, end) forwards;
-    width: 0;
+    display: block;
+    opacity: 0;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
-/* Delay animation for each line */
-.whoami text:nth-of-type(1) { animation-delay: 0s; }
-.whoami text:nth-of-type(2) { animation-delay: 2s; }
-.whoami text:nth-of-type(3) { animation-delay: 4s; }
-.whoami text:nth-of-type(4) { animation-delay: 6s; }
-.whoami text:nth-of-type(5) { animation-delay: 8s; }
+/* Typeable links & commands — hidden until typing.js reveals them */
+.whoami > a,
+.kiss > a,
+.cves > a,
+.wafwoof > a,
+.certs > a,
+.links > a,
+.cve-item > a {
+    opacity: 0;
+}
 
-.kiss text:nth-of-type(1) { animation-delay: 0s; }
-.kiss text:nth-of-type(2) { animation-delay: 2s; }
-.kiss text:nth-of-type(3) { animation-delay: 4s; }
-.kiss text:nth-of-type(4) { animation-delay: 6s; }
-.kiss text:nth-of-type(5) { animation-delay: 8s; }
-.kiss text:nth-of-type(6) { animation-delay: 10s; }
-.kiss text:nth-of-type(7) { animation-delay: 12s; }
-.kiss text:nth-of-type(8) { animation-delay: 14s; }
-
-.certs text:nth-of-type(1) { animation-delay: 0s; }
-.certs text:nth-of-type(2) { animation-delay: 2s; }
-.certs text:nth-of-type(3) { animation-delay: 4s; }
-.certs text:nth-of-type(4) { animation-delay: 6s; }
-.certs text:nth-of-type(5) { animation-delay: 8s; }
-.certs text:nth-of-type(6) { animation-delay: 10s; }
-.certs text:nth-of-type(7) { animation-delay: 12s; }
-.certs text:nth-of-type(8) { animation-delay: 14s; }
-.certs text:nth-of-type(9) { animation-delay: 16s; }
-.certs text:nth-of-type(10) { animation-delay: 18s; }
-.certs text:nth-of-type(11) { animation-delay: 20s; }
-.certs text:nth-of-type(12) { animation-delay: 22s; }
-.certs text:nth-of-type(13) { animation-delay: 24s; }
+/* Typing cursor (inserted by typing.js) */
+.typing-cursor {
+    animation: cursor-blink 1s step-end infinite;
+}
 
 .grid a:hover {
     text-shadow: 0 0 10px rgba(51, 255, 0, 0.5);
 }
 
-/* Typing animation */
+/* Blinking cursor on command links — appears after typing finishes */
+body.typing-done .grid .whoami a span::after,
+body.typing-done .grid .kiss a span::after,
+body.typing-done .grid .cves a span::after,
+body.typing-done .grid .wafwoof a span::after {
+    content: '█';
+    animation: cursor-blink 1s step-end infinite;
+    margin-left: 2px;
+}
+
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Terminal prompt prefix for content areas */
+.whoami::before,
+.kiss::before,
+.certs::before {
+    content: '';
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.75em;
+    color: rgba(51, 255, 0, 0.5);
+}
+
+/* Typing animation - used by footer only */
 @keyframes typing {
     from { width: 0 }
     to { width: 100% }
 }
 
-/* Footer */
+/* Footer - terminal status bar */
 .footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 10px;
-    background-color: #0c0c0c;
+    padding: 8px 10px;
+    background-color: rgba(0, 20, 0, 0.9);
     border-top: 1px solid #33ff00;
     font-size: 0.8em;
     text-align: center;
     z-index: 100;
+    box-shadow: 0 -2px 15px rgba(51, 255, 0, 0.1);
 }
 
 .footer a {
@@ -201,11 +320,136 @@ body {
     50% { border-color: transparent }
 }
 
-/* Dodać do stylów CSS */
-* {
-    /* Zapobieganie XSS poprzez style */
+/* Prevent selection only on ASCII art banner */
+.sign {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+/* Links section styling */
+.links a,
+.certs a {
+    display: block;
+    margin: 5px 0;
+    color: #33ff00;
+    text-decoration: none;
+}
+
+.links a:hover,
+.certs a:hover {
+    text-shadow: 0 0 10px rgba(51, 255, 0, 0.5);
+}
+
+/* Terminal-styled form elements */
+.waf {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.waf::before {
+    content: '$';
+    color: #33ff00;
+    font-size: 16px;
+    padding-right: 8px;
+    flex-shrink: 0;
+}
+
+input, button {
+    background-color: #0c0c0c;
+    color: #33ff00;
+    border: 1px solid #33ff00;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px;
+    text-shadow: 0 0 5px rgba(51, 255, 0, 0.3);
+}
+
+input {
+    flex: 1;
+    border-right: none;
+}
+
+input::placeholder {
+    color: rgba(51, 255, 0, 0.4);
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(51, 255, 0, 0.3);
+}
+
+button {
+    cursor: pointer;
+    transition: box-shadow 0.3s, background-color 0.3s;
+    white-space: nowrap;
+}
+
+button:hover {
+    background-color: rgba(51, 255, 0, 0.15);
+    box-shadow: 0 0 10px rgba(51, 255, 0, 0.4);
+    text-shadow: 0 0 10px rgba(51, 255, 0, 0.6);
+}
+
+/* Response area - like terminal output */
+.resp {
+    text-align: left;
+    font-size: 0.9em;
+}
+
+.resp pre {
+    margin: 0;
+    color: #33ff00;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .sign {
+        font-size: 0.35em;
+    }
+
+    .grid {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    body {
+        font-size: 14px;
+    }
+
+    /* Lighter scanlines on mobile for performance */
+    body::before {
+        background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.1) 0px,
+            rgba(0, 0, 0, 0.1) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+    }
+
+    .waf {
+        flex-wrap: wrap;
+    }
+
+    input {
+        border-right: 1px solid #33ff00;
+    }
+}
+
+@media (max-width: 480px) {
+    .sign {
+        font-size: 0.25em;
+    }
+
+    h1 {
+        font-size: 1.3em;
+    }
+
+    .footer a {
+        min-width: 90px;
+    }
 }
