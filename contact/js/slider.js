@@ -43,18 +43,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    let serviceInterval;
+    function startServiceSlider() {
+        serviceInterval = setInterval(nextServiceSlide, 3000);
+    }
+
     setTimeout(() => {
         setServicePosition(serviceCurrentIndex, false);
-        setInterval(nextServiceSlide, 3000);
+        startServiceSlider();
     }, 100);
 
-    // Logo Slider
+    // Pause service slider on hover
+    serviceSliderContainer.addEventListener('mouseenter', () => {
+        clearInterval(serviceInterval);
+    });
+    serviceSliderContainer.addEventListener('mouseleave', () => {
+        startServiceSlider();
+    });
+
+    // Logo / Collab Slider
     const logoSlider = document.querySelector('.logo-slider');
     const container = document.querySelector('.logo-slider-container');
     if (logoSlider && container) {
+        const cards = Array.from(logoSlider.querySelectorAll('.collab-card'));
         const imgs = Array.from(logoSlider.querySelectorAll('img'));
 
-        // Wait for all images to load (handles delayed loading causing width miscalculation)
+        // Wait for all images inside cards to load before measuring widths
         const loadPromises = imgs.map(img => {
             return new Promise(resolve => {
                 if (img.complete && img.naturalWidth !== 0) return resolve();
@@ -64,26 +78,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         Promise.all(loadPromises).then(() => {
-            const originalImgs = Array.from(logoSlider.querySelectorAll('img'));
-            if (originalImgs.length === 0) return;
+            if (cards.length === 0) return;
 
             const originalWidth = logoSlider.scrollWidth;
             if (originalWidth === 0) return;
             const containerWidth = container.offsetWidth;
 
+            // Clone full .collab-card elements (not bare <img>s) if we need more width
             let numCopies = 1;
             while (logoSlider.scrollWidth < containerWidth * 2) {
-                originalImgs.forEach(img => logoSlider.appendChild(img.cloneNode(true)));
+                cards.forEach(card => logoSlider.appendChild(card.cloneNode(true)));
                 numCopies++;
             }
 
             if (numCopies % 2 !== 0) {
-                originalImgs.forEach(img => logoSlider.appendChild(img.cloneNode(true)));
+                cards.forEach(card => logoSlider.appendChild(card.cloneNode(true)));
                 numCopies++;
             }
 
             // Set animation duration proportional to content width for constant speed
-            const speedPxPerSec = 100; // lower -> slower
+            const speedPxPerSec = 100; // lower → slower
             const distance = logoSlider.scrollWidth / 2;
             const duration = Math.max(10, Math.round(distance / speedPxPerSec));
             logoSlider.style.animationDuration = duration + 's';
@@ -197,64 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(centerElementByHash, 120);
     window.addEventListener('hashchange', centerElementByHash);
 
-    // Smooth JS-driven snapping: intercept wheel and perform a smooth scroll to next/previous section
-    const sections = ['top', 'achievements', 'cooperation']
-        .map(id => document.getElementById(id))
-        .filter(Boolean);
-
-    function getCurrentSectionIndex() {
-        const viewportCenter = window.pageYOffset + window.innerHeight / 2;
-        let best = 0;
-        let bestDist = Infinity;
-        sections.forEach((s, i) => {
-            const rect = s.getBoundingClientRect();
-            const top = window.pageYOffset + rect.top;
-            const center = top + rect.height / 2;
-            const dist = Math.abs(center - viewportCenter);
-            if (dist < bestDist) { bestDist = dist; best = i; }
-        });
-        return best;
-    }
-
-    function smoothScrollToY(targetY, duration = 800) {
-        return new Promise(resolve => {
-            const startY = window.pageYOffset;
-            const distance = targetY - startY;
-            const startTime = performance.now();
-            function ease(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; } // easeInOutCubic-like
-            function step(now) {
-                const elapsed = now - startTime;
-                const t = Math.min(1, elapsed / duration);
-                window.scrollTo(0, Math.round(startY + distance * ease(t)));
-                if (t < 1) requestAnimationFrame(step);
-                else resolve();
-            }
-            requestAnimationFrame(step);
-        });
-    }
-
-    let isAutoScrolling = false;
-    let wheelTimer;
-    window.addEventListener('wheel', (e) => {
-        if (isAutoScrolling) { e.preventDefault(); return; }
-        // small deltas shouldn't trigger full-page snap
-        if (Math.abs(e.deltaY) < 10) return;
-        e.preventDefault();
-        clearTimeout(wheelTimer);
-        wheelTimer = setTimeout(async () => {
-            const dir = e.deltaY > 0 ? 1 : -1;
-            const current = getCurrentSectionIndex();
-            const targetIndex = Math.max(0, Math.min(sections.length - 1, current + dir));
-            if (targetIndex === current) return;
-            const s = sections[targetIndex];
-            const rect = s.getBoundingClientRect();
-            const top = window.pageYOffset + rect.top;
-            const targetTop = Math.max(0, Math.round(top - (window.innerHeight - rect.height) / 2));
-            isAutoScrolling = true;
-            await smoothScrollToY(targetTop, 850); // slightly slower snap
-            isAutoScrolling = false;
-            // update hash without jumping
-            history.replaceState(null, '', '#' + s.id);
-        }, 120);
-    }, { passive: false });
+    // Native smooth scrolling is handled by CSS scroll-behavior: smooth
+    // No wheel event hijacking — let the browser handle scrolling naturally
 });
