@@ -201,8 +201,10 @@ body > p {
     opacity: 0;
 }
 
-/* CVE detail pages — always visible (no typing animation) */
-.grid > div.md {
+/* CVE detail pages & wafw00f form — always visible (no typing animation) */
+.grid > div.md,
+.grid > div.waf,
+.grid > div.resp {
     opacity: 1;
 }
 
@@ -336,7 +338,7 @@ body.typing-done .grid .wafwoof a span::after {
 }
 
 .waf::before {
-    content: '$';
+    content: 'user@input:~$';
     color: #33ff00;
     font-size: 16px;
     padding-right: 8px;
