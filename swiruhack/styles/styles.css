@@ -201,11 +201,13 @@ body > p {
     opacity: 0;
 }
 
-/* CVE detail pages & wafw00f form — always visible (no typing animation) */
+/* Pages/sections that don't use typing animation — always visible */
 .grid > div.md,
 .grid > div.waf,
-.grid > div.resp {
-    opacity: 1;
+.grid > div.resp,
+.grid > div.error,
+.grid > div.hrate {
+    opacity: 1 !important;
 }
 
 .grid > div:hover {
@@ -358,7 +360,7 @@ input, button {
 
 input {
     flex: 1;
-    border-right: none;
+    border: none;
 }
 
 input::placeholder {
