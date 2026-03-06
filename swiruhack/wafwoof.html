@@ -3,18 +3,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="wafw00f - Web Application Firewall Detection Tool">
-    <title>wafw00f | KSCSC Blog</title>
+    <meta name="description" content="webscanner - WAF Detection, TLS & Security Header Scanner">
+    <title>webscanner | KSCSC Blog</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 
 <body>
-    <h1>root@kscsc:~# <span style="font-weight:normal">wafw00f</span></h1>
-    <p>// Web Application Firewall detection tool</p>
+    <h1>root@kscsc:~# <span style="font-weight:normal">webscanner</span></h1>
+    <p>// WAF detection, TLS analysis & security header audit</p>
     <!-- Use ASCII art to create a logo -->
     <div class="sign">
         <a href="/" style="text-decoration:none;color:inherit"><pre>
-▄▄                   
 ▀████▀ ▀███▀ ▄█▀▀▀█▄█ ▄▄█▀▀▀█▄█▄█▀▀▀█▄█ ▄▄█▀▀▀█▄█   ▀███▀▀▀██▄▀███                   
   ██   ▄█▀  ▄██    ▀███▀     ▀███    ▀███▀     ▀█     ██    ██  ██                   
   ██ ▄█▀    ▀███▄   ██▀       ▀███▄   ██▀       ▀     ██    ██  ██   ▄██▀██▄ ▄█▀█████
@@ -26,14 +25,48 @@
                                                                             ██████▀  
     </pre></a>
     </div>
+    <div class="grid">
+        <div class="resp desc">
+            <pre>
+  <span style="color:#33ff00;font-weight:bold">$ man webscanner</span>
+
+  <span style="color:rgba(51,255,0,0.7)">NAME</span>
+      webscanner — WAF Detection, TLS &amp; Security Header Scanner
+
+  <span style="color:rgba(51,255,0,0.7)">DESCRIPTION</span>
+      Detects and fingerprints Web Application Firewalls (WAFs),
+      evaluates TLS configuration, and audits HTTP security headers
+      against OWASP ASVS best practices.
+
+  <span style="color:rgba(51,255,0,0.7)">CHECKS PERFORMED</span>
+      <span style="color:#33ff00">1.</span> WAF Detection    — Identifies WAF vendor and type
+      <span style="color:#33ff00">2.</span> TLS Analysis     — Version, cipher suite, key strength (grade A–F)
+      <span style="color:#33ff00">3.</span> Security Headers  — HSTS, CSP, X-Frame-Options, Referrer-Policy,
+                           Permissions-Policy, and more (OWASP ASVS)
+      <span style="color:#33ff00">4.</span> Info Leakage      — Flags Server, X-Powered-By, and similar headers
+
+  <span style="color:rgba(51,255,0,0.7)">USAGE</span>
+      Enter a target URL below and hit <span style="color:#33ff00">Scan</span>.
+      Results include a letter grade (A–F) for TLS and headers.
+            </pre>
+        </div>
+    </div>
     <!-- Create a grid of items using the .grid and .grid-item classes -->
     <div class="grid">
         <div class="waf">
             <input type="text" id="field1" placeholder="Enter URL" autofocus>
-            <button id="button1">Check WAF</button>
+            <button id="button1">Scan</button>
         </div>
         <div class="resp">
             <div id="response"></div>
+        </div>
+        <div class="resp tls-section" id="tls-section" style="display:none">
+            <div class="section-header">[ TLS Analysis ]</div>
+            <div id="tls-response"></div>
+        </div>
+        <div class="resp headers-section" id="headers-section" style="display:none">
+            <div class="section-header">[ Security Headers — OWASP ASVS ]</div>
+            <div id="headers-response"></div>
         </div>
     </div>
     <div class="footer">

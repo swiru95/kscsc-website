@@ -393,6 +393,32 @@ button:hover {
 .resp pre {
     margin: 0;
     color: #33ff00;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Section headers for TLS / Headers panels */
+.section-header {
+    color: #33ff00;
+    font-size: 0.95em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(51, 255, 0, 0.2);
+    letter-spacing: 1px;
+}
+
+/* TLS and Header sections */
+.tls-section,
+.headers-section {
+    border-color: rgba(51, 255, 0, 0.4);
+}
+
+/* Description / man page section */
+.desc pre {
+    font-size: 0.9em;
+    line-height: 1.5;
+    color: rgba(51, 255, 0, 0.8);
 }
 
 /* Responsive design */
