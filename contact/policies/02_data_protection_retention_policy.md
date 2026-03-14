@@ -40,29 +40,44 @@ Consistent with GDPR Art. 5(1)(c):
 - Personal data is limited to business contact information (email, phone) of client representatives
 - Client systems data processed during engagements is scoped to what is required by the statement of work
 
+## 4.1 Contractual Requirements for Protected Data
+
+Before processing any personally identifiable information (PII), sensitive data, or other information protected under applicable law (including but not limited to GDPR, CCPA, industry-specific regulations), the following requirements must be met:
+
+- **Explicit Declaration**: All such data categories must be explicitly identified and described in the engagement contract or data processing addendum (DPA)
+- **Legal Basis Documented**: The contract must state the legal basis for processing (e.g., contract performance, client instruction, regulatory obligation)
+- **Processing Scope**: The contract must define the permitted scope of processing, including:
+  - Which systems/data sources may be accessed
+  - Technical scope (e.g., network segment, application layer)
+  - Engagement purpose (e.g., penetration testing, audit, compliance assessment)
+- **Retention and Deletion Terms**: The contract must specify how data will be handled after engagement closure (retention period, secure deletion method)
+- **Audit Trail**: Description of how processing is logged and monitored
+
+**No protected data shall be processed without prior written agreement on these terms.**
+
 ## 5. Storage Locations and Requirements
 
-| Data Type | Permitted Storage | Encryption Required |
+| Data Type | Permitted Storage | Encryption |
 |---|---|---|
-| Client deliverables | Local (Proxmox/Debian), OneDrive for Business (EU) | Yes |
-| Technical logs | Splunk on Proxmox (local) | Yes (disk encryption) |
-| Business records | OneDrive for Business, local backup | Yes |
-| Email/contacts | Microsoft 365 (EU datacentre) | Platform-managed |
-| Temporary working files | Local device only | Yes (FileVault/LUKS) |
+| Client deliverables | Local machines, cloud storage | Platform-managed encryption |
+| Technical logs | Cloud storage, local server, SIEM platform | Platform-managed encryption |
+| Business records | Local machines, cloud storage | Platform-managed encryption |
+| Email/contacts | Local machines, cloud storage | Platform-managed encryption |
+| Temporary working files | Local machines only | Platform-managed encryption |
 
-All storage must remain within the EU/EEA. No client data is stored on personal cloud accounts (iCloud personal, Google Drive personal, etc.).
+All storage must remain within the EU/EEA. No data is stored on personal cloud accounts.
 
 ## 6. Retention Schedule
 
 | Data Category | Retention Period | Basis |
 |---|---|---|
-| Client deliverables and reports | 5 years after engagement close | Contractual, professional liability |
-| Technical working files (raw logs, pcaps, interim outputs) | 90 days after engagement close, then securely deleted | Data minimisation |
+| Client deliverables and reports | Per engagement contract; standard: duration of contract | Contractual, professional liability |
+| Technical working files (raw logs, pcaps, interim outputs) | Immediately after engagement close, then securely deleted | Data minimisation |
 | Invoices and financial records | 5 years (7 years if VAT-registered) | Polish tax law (Ustawa o rachunkowości) |
 | Contracts and NDAs | Duration + 5 years after expiry | Legal obligation |
-| Email correspondence | 3 years after last contact | Legitimate interest |
+| Email correspondence | 1 year after last contact | Legitimate interest |
 | Business contact details | Duration of business relationship + 1 year | Legitimate interest |
-| Security logs (Splunk) | 12 months rolling | Monitoring Policy (MON-001) |
+| Security logs | 90 days active, then archived for 12 months | Monitoring and compliance |
 | Backup archives | Per Backup Policy (BKP-001) | Operational |
 
 ## 7. Data Subject Rights

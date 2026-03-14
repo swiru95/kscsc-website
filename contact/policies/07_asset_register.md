@@ -19,23 +19,23 @@ This register inventories all information assets used in business operations. It
 
 | Asset ID | Type | Description | Serial / Identifier | Owner | Location | Classification | Encryption | Status |
 |---|---|---|---|---|---|---|---|---|
-| HW-001 | Laptop | MacBook Pro | [Serial] | Krzysztof Swidrak | Primary workplace | Confidential | FileVault 2 | Active |
-| HW-002 | Desktop | Mac Mini | [Serial] | Krzysztof Swidrak | Primary workplace | Confidential | FileVault 2 | Active |
-| HW-003 | Laptop | MSI [Model] / Kali Linux | [Serial] | Krzysztof Swidrak | Primary workplace / field | Confidential | LUKS | Active |
-| HW-004 | Server | Proxmox host [Model] | [Serial] | Krzysztof Swidrak | Primary workplace | Confidential | Volume/VM encryption | Active |
-| HW-005 | External HDD | Time Machine backup – MacBook Pro | [Model/S/N] | Krzysztof Swidrak | Primary workplace | Confidential | AES-256 (Time Machine) | Active |
-| HW-006 | External HDD | Time Machine backup – Mac Mini | [Model/S/N] | Krzysztof Swidrak | Primary workplace | Confidential | AES-256 (Time Machine) | Active |
-| HW-007 | External HDD | Offsite backup – rotated quarterly | [Model/S/N] | Krzysztof Swidrak | Offsite | Confidential | VeraCrypt | Active |
+| HW-001 | Laptop | Primary workstation | [Serial] | Owner | Primary workplace | Confidential | Platform-native | Active |
+| HW-002 | Desktop | Secondary workstation | [Serial] | Owner | Primary workplace | Confidential | Platform-native | Active |
+| HW-003 | Laptop | Field assessment device | [Serial] | Owner | Primary workplace / field | Confidential | LUKS | Active |
+| HW-004 | Server | Virtualization host | [Serial] | Owner | Primary workplace | Confidential | Volume/VM encryption | Active |
+| HW-005 | External HDD | Backup storage – primary | [Model/S/N] | Owner | Primary workplace | Confidential | AES-256 | Active |
+| HW-006 | External HDD | Backup storage – secondary | [Model/S/N] | Owner | Primary workplace | Confidential | AES-256 | Active |
+| HW-007 | External HDD | Offsite backup – rotated quarterly | [Model/S/N] | Owner | Offsite | Confidential | VeraCrypt | Active |
 
 ---
 
-## 3. Virtual / Software Assets (Proxmox VMs)
+## 3. Virtual / Software Assets
 
 | Asset ID | Type | Description | Host | IP / Hostname | Classification | Backup | Status |
 |---|---|---|---|---|---|---|---|
-| VM-001 | VM | Debian – general server | HW-004 | [IP] | Confidential | Daily PBS | Active |
-| VM-002 | VM | Splunk Enterprise / Free | HW-004 | [IP] | Confidential | Daily PBS | Active |
-| VM-003 | VM | [Other VMs – e.g. pentest lab] | HW-004 | [IP] | Confidential | Weekly PBS | Active |
+| VM-001 | VM | General purpose server | HW-004 | [IP] | Confidential | Daily | Active |
+| VM-002 | VM | Monitoring and logging server | HW-004 | [IP] | Confidential | Daily | Active |
+| VM-003 | VM | Assessment / lab environment | HW-004 | [IP] | Confidential | Weekly | Active |
 
 ---
 
@@ -43,10 +43,10 @@ This register inventories all information assets used in business operations. It
 
 | Asset ID | Service | Provider | Region | Purpose | Data Classification | MFA | Admin Account | Status |
 |---|---|---|---|---|---|---|---|---|
-| CLD-001 | Microsoft 365 Business Premium | Microsoft | EU (West Europe / Poland) | Email, OneDrive, Teams, licensing | Internal / Confidential | Yes | [email] | Active |
-| CLD-002 | Microsoft Azure | Microsoft | Poland Central / West Europe | Hosting, identity, networking | Internal / Confidential | Yes | [email] | Active |
-| CLD-003 | OneDrive for Business | Microsoft | EU | Document storage and backup | Internal / Confidential | Yes (via M365) | [email] | Active |
-| CLD-004 | OpenVPN (self-hosted) | Self | Local (Proxmox) | Secure remote access | N/A (infrastructure) | Cert-based | N/A | Active |
+| CLD-001 | Productivity suite | Cloud vendor A | EU | Email, collaboration, licensing | Internal / Confidential | Yes | [email] | Active |
+| CLD-002 | Compute platform | Cloud vendor B | EU | Hosting, identity, networking | Internal / Confidential | Yes | [email] | Active |
+| CLD-003 | Document storage | Cloud vendor A | EU | Document storage and backup | Internal / Confidential | Yes (via suite) | [email] | Active |
+| CLD-004 | VPN (self-hosted) | Self | On-premises | Secure remote access | N/A (infrastructure) | Cert-based | N/A | Active |
 
 ---
 
@@ -54,9 +54,9 @@ This register inventories all information assets used in business operations. It
 
 | Asset ID | Type | Description | Location | IP / Hostname | Authentication | Status |
 |---|---|---|---|---|---|---|
-| NET-001 | VPN | OpenVPN server | Proxmox VM | [IP/hostname] | Client certificate + key | Active |
-| NET-002 | Router/Firewall | [ISP router or dedicated firewall] | Primary workplace | [IP] | Admin password (unique) | Active |
-| NET-003 | Switch | [If applicable] | Primary workplace | N/A | N/A | Active |
+| NET-001 | VPN | Secure remote access gateway | On-premises | [IP/hostname] | Client certificate + key | Active |
+| NET-002 | Router/Firewall | Perimeter network device | Primary workplace | [IP] | Admin password (unique) | Active |
+| NET-003 | Switch | [Network switch – if applicable] | Primary workplace | N/A | N/A | Active |
 
 ---
 
@@ -64,9 +64,9 @@ This register inventories all information assets used in business operations. It
 
 | Key ID | Key Type | Fingerprint (SHA-256) | Used By | Authorised On | Created | Last Reviewed |
 |---|---|---|---|---|---|---|
-| KEY-001 | Ed25519 | [fingerprint] | Krzysztof Swidrak – MacBook Pro | Proxmox host, Debian VM | 01.03.2023 | 01.03.2023 |
-| KEY-002 | Ed25519 | [fingerprint] | Krzysztof Swidrak – Mac Mini | Proxmox host, Debian VM | 01.03.2023 | 01.03.2023 |
-| KEY-003 | Ed25519 | [fingerprint] | Krzysztof Swidrak – MSI/Kali | Proxmox host | 01.03.2023 | 01.03.2023 |
+| KEY-001 | Ed25519 | [fingerprint] | Owner – Device A | Virtualization host, servers | [Date] | [Date] |
+| KEY-002 | Ed25519 | [fingerprint] | Owner – Device B | Virtualization host, servers | [Date] | [Date] |
+| KEY-003 | Ed25519 | [fingerprint] | Owner – Device C | Virtualization host | [Date] | [Date] |
 
 ---
 

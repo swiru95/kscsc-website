@@ -16,11 +16,11 @@ This policy defines access control principles and requirements for all systems, 
 ## 2. Scope
 
 Applies to:
-- Endpoint devices: MacBook Pro, Mac Mini, MSI/Kali Linux
-- Server infrastructure: Proxmox host, Debian VM(s), Splunk instance
-- Cloud services: Microsoft 365 Business Premium, Microsoft Azure, OneDrive for Business
-- Network: OpenVPN infrastructure
-- Any third-party tools or platforms used during client engagements
+- Business computers (local devices)
+- Server infrastructure (virtualization hosts, application servers)
+- Cloud services (email, collaboration, storage, compute)
+- Network infrastructure (VPN, firewalls, routers)
+- Any tools or platforms used in client engagements
 
 ## 3. Principles
 
@@ -31,58 +31,53 @@ Applies to:
 
 ## 4. Authentication Requirements
 
-### 4.1 Password Policy
+### 4.1 Authentication Hierarchy
 
-| Requirement | Standard |
-|---|---|
-| Minimum length | 16 characters for service accounts; 20+ for critical systems |
-| Complexity | Mix of upper, lower, numbers, symbols; no dictionary words |
-| Reuse | No reuse of last 12 passwords |
-| Storage | Password manager only (e.g. Bitwarden, 1Password) – no plaintext, no browser save for critical accounts |
-| Sharing | Passwords are never shared |
+Authentication follows a priority order, applied to all systems and services:
+
+1. **Passwordless Authentication / Passkeys** – Preferred where available (biometric, hardware key, platform-native authentication)
+2. **Single Sign-On (SSO) via Identity Provider** – Preferred for cloud services where passkeys are not available
+3. **Password-Based Authentication** – Used only when passwordless and SSO are not available
+   - Minimum length: 12+ characters
+   - Storage: Secure credential vault or password manager only – no plaintext, no browser storage
+   - Passwords are never shared or reused across systems
 
 ### 4.2 Multi-Factor Authentication (MFA)
 
-MFA is **mandatory** for:
+**MFA is mandatory for all administrative access** to business devices and services, including:
+- Administrative access to cloud services
+- Server management interfaces
+- VPN access
+- Any service with access to client or business data
 
-| System | MFA Method |
-|---|---|
-| Microsoft 365 / Azure | Authenticator app (TOTP or push) |
-| macOS login (if remote access enabled) | System-level controls |
-| VPN (OpenVPN) | Certificate-based authentication + optional TOTP |
-| Proxmox web UI | Strong password (isolated network, not internet-exposed) |
-| Splunk web UI | Strong password (local network only) |
-| Any SaaS tool with client data access | Authenticator app |
+Acceptable MFA methods:
+- Biometric authentication (where platform-supported)
+- Hardware security keys
+- Time-based one-time password (TOTP) authenticator app
+- Platform-provided authentication methods
 
-MFA backup codes are stored in the password manager, encrypted.
+Backup MFA codes, if applicable, are stored securely in the password manager.
 
-### 4.3 SSH Access
+### 4.3 Key-Based Access
 
-- Password authentication: **disabled**
-- Key-based authentication: **required**
-- SSH keys: minimum RSA 4096 or Ed25519
-- Private keys: protected with a passphrase
-- Root login via SSH: **disabled** (`PermitRootLogin no`)
-- Authorised key inventory maintained in Asset Register (AST-001)
+Where key-based authentication is used (e.g., remote server access):
+- Key authentication is required; password authentication is disabled
+- Private keys are protected with a strong passphrase
+- Root-level access is restricted and audited
+- Key inventory is maintained and reviewed annually
 
 ## 5. Device Access Controls
 
 ### 5.1 Screen Lock and Idle Timeout
 
-| Device | Lock Timeout |
+| Device Category | Lock Timeout |
 |---|---|
-| MacBook Pro | ≤ 5 minutes idle |
-| Mac Mini | ≤ 5 minutes idle |
-| MSI / Kali Linux | ≤ 5 minutes idle |
+| Business computers | ≤ 5 minutes idle |
+| Servers (if local access configured) | ≤ 5 minutes idle |
 
 ### 5.2 Disk Encryption
 
-| Device | Encryption |
-|---|---|
-| MacBook Pro | FileVault 2 (enabled, recovery key stored securely offline) |
-| Mac Mini | FileVault 2 |
-| MSI / Kali Linux | LUKS full-disk encryption |
-| Proxmox host | Disk encryption at volume/VM level |
+All business computers and servers have full-disk encryption enabled with platform-managed or strong encryption keys.
 
 ### 5.3 Physical Access
 
@@ -90,50 +85,44 @@ MFA backup codes are stored in the password manager, encrypted.
 - Devices are not left unattended in public spaces
 - Devices used in public spaces use a privacy screen
 
-## 6. Network Access
+## 6. Cloud Services
 
-### 6.1 OpenVPN
+Access to cloud services follows the authentication hierarchy (Section 4.1):
+- Passwordless authentication or passkeys are preferred
+- SSO via identity provider is enabled where available
+- All administrative roles have MFA enforced
+- Cloud resources are provisioned in compliant regions (EU-based preferred)
+- Role-based access control (RBAC) is implemented with least-privilege assignment
+- Privileged role assignments are reviewed every 6 months
 
-- Certificates issued per device; no shared certificates
-- Certificate validity reviewed annually
-- Revocation list (CRL) maintained and current
-- VPN logs retained per Monitoring Policy (MON-001)
+## 7. Network Access
 
-### 6.2 Proxmox / Local Network
+- VPN access requires strong authentication and MFA
+- Certificates used for network authentication are reviewed and renewed annually
+- Network infrastructure (firewalls, routers) follows a default-deny approach; all access rules are documented
+- VPN and network logs are retained per Monitoring Policy
 
-- Proxmox management UI is not exposed to the public internet
-- Access to the Proxmox host is via local network or VPN only
-- Firewall rules follow default-deny with explicit allow rules documented
+## 8. Client Engagement Access
 
-### 6.3 Azure
-
-- Network Security Groups (NSGs) applied to all resources
-- No resources with public IP unless explicitly required and documented
-- Azure resources provisioned in EU regions (Poland Central or West Europe preferred)
-- Privileged Identity Management (PIM) or role assignment review every 6 months
-
-## 7. Client Engagement Access
-
-- Credentials obtained during client engagements (test accounts, API keys, etc.) are:
-  - Stored in an engagement-specific vault entry in the password manager
-  - Labelled with engagement name and expiry
+- Credentials obtained during client engagements (test accounts, API keys, temporary access) are:
+  - Stored in an engagement-specific vault in the password manager
+  - Labelled with engagement name and documentation of permitted scope and expiry
   - Deleted or returned to the client at engagement close
-- Client network access (VPN, jump hosts) is terminated immediately upon engagement completion
-- Engagement-specific SSH keys are generated per engagement and deleted after
+- Client network access is terminated immediately upon engagement completion
+- Engagement-specific access keys are generated per engagement and securely deleted after engagement close
 
-## 8. Third-Party and Subcontractor Access
+## 9. Third-Party and Subcontractor Access
 
 - The business does not currently engage subcontractors with access to client systems
 - If this changes, a formal access request, NDA, and time-limited access grant are required before any access is provided
 
-## 9. Access Review
+## 10. Access Review
 
 | Scope | Frequency |
 |---|---|
-| Azure role assignments | Every 6 months |
-| Microsoft 365 licences and permissions | Annual |
-| SSH authorised keys | Annual |
-| OpenVPN certificates | Annual |
+| Cloud service role assignments | Every 6 months |
+| User permissions and cloud access | Annual |
+| Authentication keys and certificates | Annual |
 | Active engagement credentials | At engagement close |
 
 ---
