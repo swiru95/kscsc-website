@@ -304,6 +304,9 @@ body {
     justify-content: center;
     box-sizing: border-box;
     padding: 60px 0;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
 }
 
 .achievements-section h3 {
@@ -520,6 +523,9 @@ body {
     align-items: center;
     box-sizing: border-box;
     padding: 60px 0;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
 }
 
 .cooperated-with {
