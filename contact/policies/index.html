@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KSCSC — Information Security Policies">
+    <title>Policies — KSCSC</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <style>
+        /* --- Policies Page Layout --- */
+        .policies-wrapper {
+            max-width: 900px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 60px 0 80px;
+        }
+
+        .policies-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .policies-header h1 {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin: 0 0 8px;
+        }
+
+        .policies-header p {
+            color: var(--color-text-muted);
+            font-size: 1em;
+            margin: 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            margin-bottom: 24px;
+            transition: color var(--transition);
+        }
+        .back-link:hover {
+            color: #0a3d3d;
+        }
+
+        /* --- Policy Card (collapsed) --- */
+        .policy-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 16px var(--color-shadow);
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: box-shadow var(--transition);
+        }
+        .policy-card:hover {
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.09);
+        }
+
+        .policy-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.05em;
+            font-weight: 600;
+            color: var(--color-text);
+            text-align: left;
+            gap: 12px;
+        }
+        .policy-toggle:hover {
+            color: var(--color-accent);
+        }
+
+        .policy-toggle .chevron {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            transition: transform 0.25s ease;
+            color: var(--color-text-muted);
+        }
+
+        .policy-card.open .policy-toggle .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* --- Policy Content (expanded) --- */
+        .policy-content {
+            display: none;
+            padding: 0 24px 24px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .policy-card.open .policy-content {
+            display: block;
+        }
+
+        /* --- Markdown Rendered Styles --- */
+        .policy-content h1 { font-size: 1.5em; color: var(--color-accent); margin: 24px 0 12px; }
+        .policy-content h2 { font-size: 1.25em; color: var(--color-accent); margin: 20px 0 10px; border-bottom: 1px solid var(--color-border); padding-bottom: 6px; }
+        .policy-content h3 { font-size: 1.1em; color: var(--color-text); margin: 16px 0 8px; }
+        .policy-content p { color: var(--color-text-muted); line-height: 1.6; margin: 8px 0; }
+        .policy-content strong { color: var(--color-text); }
+        .policy-content ul, .policy-content ol { color: var(--color-text-muted); padding-left: 24px; line-height: 1.6; }
+        .policy-content li { margin-bottom: 4px; }
+        .policy-content hr { border: none; border-top: 1px solid var(--color-border); margin: 20px 0; }
+        .policy-content blockquote {
+            border-left: 3px solid var(--color-accent);
+            margin: 12px 0;
+            padding: 8px 16px;
+            background: var(--color-accent-light);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            color: var(--color-text-muted);
+        }
+        .policy-content code {
+            background: var(--color-bg-alt);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .policy-content pre {
+            background: var(--color-bg-alt);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+        }
+        .policy-content pre code {
+            background: none;
+            padding: 0;
+        }
+        .policy-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 0.92em;
+        }
+        .policy-content th {
+            background: var(--color-accent-light);
+            color: var(--color-text);
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 12px;
+            border: 1px solid var(--color-border);
+        }
+        .policy-content td {
+            padding: 8px 12px;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-muted);
+            vertical-align: top;
+        }
+        .policy-content tr:nth-child(even) td {
+            background: var(--color-bg);
+        }
+
+        .policy-loading {
+            color: var(--color-text-muted);
+            font-size: 0.9em;
+            font-style: italic;
+            padding: 12px 0;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 640px) {
+            .policies-wrapper {
+                width: 95%;
+                padding: 32px 0 60px;
+            }
+            .policy-toggle {
+                padding: 14px 16px;
+                font-size: 0.95em;
+            }
+            .policy-content {
+                padding: 0 16px 16px;
+            }
+            .policy-content table {
+                font-size: 0.82em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <main id="main-content">
+        <div class="policies-wrapper">
+            <a href="../" class="back-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                Back to Home
+            </a>
+            <div class="policies-header">
+                <h1>Security Policies</h1>
+                <p>Transparency in how we protect information assets and client data.</p>
+            </div>
+            <div id="policies-list"></div>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <p>&copy; 2026 Krzysztof Swidrak &mdash; KSCSC. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        const policies = [
+            { file: '01_information_security_policy.md', title: 'Information Security Policy' },
+            { file: '02_data_protection_retention_policy.md', title: 'Data Protection & Retention Policy' },
+            { file: '03_access_control_policy.md', title: 'Access Control Policy' },
+            { file: '04_log_management_monitoring_policy.md', title: 'Log Management & Monitoring Policy' },
+            { file: '05_backup_policy.md', title: 'Backup Policy' },
+            { file: '06_incident_response_policy.md', title: 'Incident Response Policy' },
+            { file: '07_asset_register.md', title: 'Asset Register' }
+        ];
+
+        const list = document.getElementById('policies-list');
+
+        policies.forEach((policy, index) => {
+            const card = document.createElement('div');
+            card.className = 'policy-card';
+            card.innerHTML = `
+                <button class="policy-toggle" aria-expanded="false" aria-controls="policy-content-${index}">
+                    <span>${policy.title}</span>
+                    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="policy-content" id="policy-content-${index}" role="region">
+                    <p class="policy-loading">Loading…</p>
+                </div>
+            `;
+
+            const toggle = card.querySelector('.policy-toggle');
+            const content = card.querySelector('.policy-content');
+            let loaded = false;
+
+            toggle.addEventListener('click', () => {
+                const isOpen = card.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', isOpen);
+
+                if (isOpen && !loaded) {
+                    fetch(policy.file)
+                        .then(res => {
+                            if (!res.ok) throw new Error('Not found');
+                            return res.text();
+                        })
+                        .then(md => {
+                            content.innerHTML = marked.parse(md);
+                            loaded = true;
+                        })
+                        .catch(() => {
+                            content.innerHTML = '<p class="policy-loading">Unable to load policy.</p>';
+                        });
+                }
+            });
+
+            list.appendChild(card);
+        });
+    </script>
+</body>
+
+</html>
