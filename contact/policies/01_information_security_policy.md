@@ -17,10 +17,10 @@ This policy establishes the information security framework for Krzysztof Swidrak
 
 This policy applies to:
 - All information assets owned or processed by the business
-- All devices used for business purposes (MacBook Pro, Mac Mini, MSI/Kali Linux, Proxmox server)
-- All cloud services (Microsoft 365 Business Premium, Microsoft Azure, OneDrive)
+- All devices used for business purposes (Asset Register)
+- All cloud services (Asset Register)
 - All client engagements and associated deliverables
-- Network infrastructure including OpenVPN
+- Network infrastructure including VPN provider
 
 ## 3. Information Security Principles
 
