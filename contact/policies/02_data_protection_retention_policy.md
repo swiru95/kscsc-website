@@ -1,7 +1,7 @@
 # Data Protection and Retention Policy
 
 **Document ID:** DPR-001  
-**Version:** 1.0  
+**Version:** 2.0  
 **Effective Date:** 2025-01-01  
 **Owner:** Krzysztof Swidrak, Sole Proprietor  
 **Review Cycle:** Annual  
@@ -95,8 +95,8 @@ When retention periods expire, data must be securely deleted:
 
 | Media | Method |
 |---|---|
-| SSD (Computers) | File-level encryption key destruction (FileVault / LUKS / Bitlocker) |
-| HDD (Servers) | `shred` or `nwipe` (minimum 3 passes), or physical destruction |
+| SSD (Computers) | File-level encryption key destruction or platform-native secure erase |
+| HDD (Servers) | Secure wipe (minimum 3 passes) or physical destruction |
 | Cloud storage | Platform deletion confirmed, followed by removal from backups at next backup cycle |
 | Printed documents | Cross-cut shredding |
 
@@ -126,4 +126,4 @@ A lightweight RoPA is maintained (see Asset Register – AST-001) documenting:
 ---
 
 *Approved by:* Krzysztof Swidrak  
-*Date:* 01.03.2023
+*Date:* 13.03.2023

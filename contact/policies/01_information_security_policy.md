@@ -1,7 +1,7 @@
 # Information Security Policy
 
 **Document ID:** ISP-001  
-**Version:** 1.0  
+**Version:** 2.0  
 **Effective Date:** 2025-01-01  
 **Owner:** Krzysztof Swidrak, Sole Proprietor  
 **Review Cycle:** Annual  
@@ -59,11 +59,11 @@ Client deliverables are always classified as **Confidential** unless the client 
 
 | Domain | Control |
 |---|---|
-| Physical | Screen lock (≤5 min timeout), device encryption (FileVault / LUKS / BitLocker) |
-| Logical | MFA on all business accounts, unique passwords via password manager |
-| Network | OpenVPN for remote access, Proxmox isolated from public internet |
-| Cloud | Azure resources in EU regions, Microsoft 365 with MFA enforced |
-| Monitoring | Splunk (local) for log aggregation and alerting |
+| Physical | Screen lock (≤5 min timeout), full-disk encryption on all devices |
+| Logical | MFA on all business accounts, unique passwords via password manager, passwordless authentication preferred |
+| Network | VPN for remote access, server infrastructure isolated from public internet |
+| Cloud | Cloud resources in EU regions, MFA enforced on all administrative access |
+| Monitoring | SIEM platform for log aggregation and alerting |
 | Backup | Encrypted backups per Backup Policy (BKP-001) |
 | Incident | Documented response procedure per Incident Response Policy (IRP-001) |
 
@@ -92,4 +92,4 @@ This policy is reviewed annually or following:
 ---
 
 *Approved by:* Krzysztof Swidrak  
-*Date:* 01.03.2023
+*Date:* 13.03.2023

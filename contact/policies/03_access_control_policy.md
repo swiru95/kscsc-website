@@ -1,7 +1,7 @@
 # Access Control Policy
 
 **Document ID:** ACP-001  
-**Version:** 1.0  
+**Version:** 2.0  
 **Effective Date:** 2025-01-01  
 **Owner:** Krzysztof Swidrak, Sole Proprietor  
 **Review Cycle:** Annual  
@@ -128,4 +128,4 @@ Credentials obtained during client engagements (test accounts, API keys, tempora
 ---
 
 *Approved by:* Krzysztof Swidrak  
-*Date:* 01.03.2023
+*Date:* 13.03.2023
