@@ -104,7 +104,7 @@ Access to cloud services follows the authentication hierarchy (Section 4.1):
 
 ## 8. Client Engagement Access
 
-- Credentials obtained during client engagements (test accounts, API keys, temporary access) are:
+Credentials obtained during client engagements (test accounts, API keys, temporary access) are:
   - Stored in an engagement-specific vault in the password manager
   - Labelled with engagement name and documentation of permitted scope and expiry
   - Deleted or returned to the client at engagement close

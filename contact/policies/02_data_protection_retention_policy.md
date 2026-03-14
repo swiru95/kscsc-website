@@ -95,8 +95,8 @@ When retention periods expire, data must be securely deleted:
 
 | Media | Method |
 |---|---|
-| SSD (Mac, MSI) | File-level encryption key destruction (FileVault / LUKS volume deletion) |
-| HDD (Proxmox server) | `shred` or `nwipe` (minimum 3 passes), or physical destruction |
+| SSD (Computers) | File-level encryption key destruction (FileVault / LUKS / Bitlocker) |
+| HDD (Servers) | `shred` or `nwipe` (minimum 3 passes), or physical destruction |
 | Cloud storage | Platform deletion confirmed, followed by removal from backups at next backup cycle |
 | Printed documents | Cross-cut shredding |
 
@@ -105,7 +105,7 @@ Secure deletion is logged with: data category, volume/approximate size, method u
 ## 9. Data Transfers
 
 - Client data is not transferred to third parties without explicit client consent or contractual necessity
-- Sub-processors (Microsoft 365, Azure) are EU-based and covered by standard contractual clauses where applicable
+- Sub-processors (CSP, SaaS providers) are EU-based and covered by standard contractual clauses where applicable
 - No client data is shared via unencrypted channels (no plain email attachments for Confidential data – use password-protected archives or secure file sharing)
 
 ## 10. Privacy by Design
