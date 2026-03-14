@@ -11,7 +11,7 @@
 
 ## 1. Purpose
 
-This policy establishes the information security framework for [Business Name], a sole proprietorship providing cybersecurity advisory and testing services. It defines the principles, responsibilities, and minimum controls required to protect business and client information assets.
+This policy establishes the information security framework for Krzysztof Swidrak Cyber Security Consulting (KSCSC), a sole proprietorship providing cybersecurity advisory and testing services. It defines the principles, responsibilities, and minimum controls required to protect business and client information assets.
 
 ## 2. Scope
 

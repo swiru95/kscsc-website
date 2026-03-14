@@ -74,10 +74,12 @@ This register inventories all information assets used in business operations. It
 
 Active engagement credentials (test accounts, client VPN certs, API keys) are tracked in the password manager under a dedicated vault labelled by engagement. This register tracks only which engagements have active credentials outstanding.
 
+**Note:** Specific client engagement details are withheld for confidentiality. The table below shows the template structure; actual engagement data is maintained internally only.
+
 | Engagement ID | Client | Credential Type | Status | Expected Close |
 |---|---|---|---|---|
-| ENG-2025-001 | [Client A] | Test AD accounts, VPN cert | Active | 01.03.2023 |
-| ENG-2025-002 | [Client B] | API keys | Closed – credentials returned | 01.03.2023 |
+| ENG-YYYY-NNN | [Confidential] | Test AD accounts, VPN cert, API keys | Active/Closed | [Date] |
+| ENG-YYYY-NNN | [Confidential] | Test environment access | Closed | [Date] |
 
 ---
 
