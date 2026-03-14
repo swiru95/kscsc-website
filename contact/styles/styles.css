@@ -678,7 +678,6 @@ body {
     padding: 24px 20px 40px;
     color: var(--color-text-muted);
     font-size: 0.88em;
-    border-top: 1px solid var(--color-border);
     margin-top: 36px;
     width: 100%;
 }
