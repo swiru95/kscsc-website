@@ -100,7 +100,7 @@ All test results are documented with: date, what was tested, outcome, any remedi
 |---|---|---|
 | Primary workstation | 4 hours (restore or replacement) | 1 hour (automated local backup) |
 | Server virtual machines | 24 hours | 24 hours |
-| Client deliverables | 24 hour | 24 hours (cloud sync) |
+| Client deliverables | 24 hours | 24 hours (cloud sync) |
 | Email | 2 hours | 24 hours |
 
 These are targets for planning; actual recovery time depends on failure scenario.
