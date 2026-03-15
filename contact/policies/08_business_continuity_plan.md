@@ -367,7 +367,7 @@ This plan is a living document. It is updated:
 
 ## 11. Approval and Declaration
 
-I, Krzysztof Swidrak, acting as the owner and sole operator of Krzysztof Swidrak Cyber Security Consulting (NIP: 6793290134), confirm that:
+I, Krzysztof Swidrak, acting as the owner and sole operator of Krzysztof Swidrak Cyber Security Consulting (NIP: 9522237510), confirm that:
 
 - This Business Continuity Plan reflects the actual operational capabilities and limitations of the business
 - The controls described are implemented and maintained as stated
@@ -381,4 +381,4 @@ I, Krzysztof Swidrak, acting as the owner and sole operator of Krzysztof Swidrak
 
 ---
 
-*Krzysztof Swidrak Cyber Security Consulting (KSCSC) | NIP: 6793290134 | contact@kscsc.online*
+*Krzysztof Swidrak Cyber Security Consulting (KSCSC) | NIP: 9522237510 | contact@kscsc.online*
