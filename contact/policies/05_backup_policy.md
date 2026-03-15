@@ -16,9 +16,9 @@ This policy defines backup requirements to ensure business continuity and the re
 ## 2. Scope
 
 Applies to all business-critical data and systems:
-- Endpoint devices (MacBook Pro, Mac Mini, MSI/Kali Linux)
-- Proxmox server (host configuration and VMs)
-- Cloud data (Microsoft 365, OneDrive for Business, Azure)
+- Endpoint devices (primary workstations, security testing endpoint)
+- On-premise server (host configuration and virtual machines)
+- Cloud data (productivity suite, cloud storage, cloud platform)
 - Client deliverables and active engagement data
 
 ## 3. Backup Principles
@@ -30,65 +30,67 @@ Applies to all business-critical data and systems:
 
 ## 4. Backup Schedule
 
-### 4.1 MacBook Pro and Mac Mini
+### 4.1 Primary Workstations
 
 | Mechanism | Destination | Frequency | Retention |
 |---|---|---|---|
-| Time Machine | External encrypted HDD (local) | Continuous / hourly | 1 month local rolling |
-| OneDrive for Business | Microsoft 365 cloud (EU) | Continuous sync for Documents folder | 90 days version history |
+| Cloud backup service | Provider-managed cloud storage (encrypted) | Continuous / automatic | Per provider retention policy |
+| Cloud sync | Cloud storage (EU) | Continuous sync for Documents folder | 90 days version history |
 | Manual encrypted archive | External HDD or NAS | Monthly | 6 months |
 
-### 4.2 MSI / Kali Linux
+### 4.2 Security Testing Endpoint
 
 | Mechanism | Destination | Frequency | Retention |
 |---|---|---|---|
-| `rsync` + encrypted archive | Proxmox NAS share or external HDD | Weekly | 4 weeks |
-| Critical engagement files | OneDrive for Business (via encrypted archive upload) | Per engagement | Per retention schedule in DPR-001 |
+| Incremental sync + encrypted archive | On-premise NAS share or external HDD | Weekly | 4 weeks |
+| Critical engagement files | Cloud storage (via encrypted archive upload) | Per engagement | Per retention schedule in DPR-001 |
 
-### 4.3 Proxmox Server
+### 4.3 On-Premise Server
 
 | Mechanism | Destination | Frequency | Retention |
 |---|---|---|---|
-| Proxmox Backup Server (PBS) or Vzdump | Local storage + external HDD | Daily (VMs) | 7 daily, 4 weekly |
-| Proxmox host config | Exported and stored in OneDrive for Business | After any configuration change | Last 5 versions |
-| Splunk indexes | Included in VM backup | Daily | Per VM backup schedule |
+| VM backup (hypervisor-native) | Local storage | Daily (VMs) | 7 daily, 4 weekly |
+| Offsite replication (primary) | Cloud platform A (encrypted) | Daily (after local backup) | Per cloud retention policy |
+| Offsite replication (secondary) | Cloud platform B (encrypted) | Daily (after local backup) | Per cloud retention policy |
+| Server host configuration | Exported and stored in cloud storage | After any configuration change | Last 5 versions |
+| SIEM indexes | Included in VM backup | Daily | Per VM backup schedule |
 
-### 4.4 Microsoft 365 / Azure
+### 4.4 Cloud Services
 
 | Service | Backup Approach | Notes |
 |---|---|---|
-| OneDrive for Business | Microsoft-managed redundancy + version history (90 days) | Enable recycle bin retention max |
-| Exchange Online (email) | Microsoft-managed; export to .pst annually | Store encrypted local copy |
-| Azure resources | ARM templates or Terraform IaC stored in Git | Infrastructure-as-Code approach preferred |
-| Azure VMs (if any) | Azure Backup or snapshot per resource | Enable if VMs are business-critical |
+| Cloud storage | Provider-managed redundancy + version history (90 days) | Enable recycle bin retention max |
+| Cloud email | Provider-managed; export archive annually | Store encrypted local copy |
+| Cloud platform resources | Infrastructure-as-Code templates stored in version control | IaC approach preferred |
+| Cloud virtual machines (if any) | Platform-native backup or snapshot per resource | Enable if VMs are business-critical |
 
 ## 5. Encryption Requirements
 
 | Backup Type | Encryption Method |
 |---|---|
-| Time Machine | AES-256 (native, password set at creation) |
-| External HDD | VeraCrypt volume or macOS encrypted disk image |
-| Rsync archives | GPG encryption before transfer, or rsync to LUKS-encrypted volume |
-| Proxmox PBS | Built-in client-side encryption (ChaCha20-Poly1305) |
+| Automated local backup | AES-256 (native encryption, password set at creation) |
+| External HDD | Full-disk encryption or encrypted disk image |
+| Incremental sync archives | Encryption before transfer, or sync to encrypted volume |
+| Server VM backup | Built-in client-side encryption |
 | Cloud uploads | TLS in transit; encrypted at rest by provider; additional encryption for sensitive archives |
 
-Encryption keys / passphrases are stored in the password manager. Recovery key for FileVault stored offline (printed, physically secured).
+Encryption keys / passphrases are stored in the password manager. Recovery keys for full-disk encryption stored offline (printed, physically secured).
 
 ## 6. Offsite Backup
 
 The 3-2-1 rule requires at least one offsite copy. Offsite options in use:
 
-- **OneDrive for Business** – primary offsite for documents and deliverables (EU datacentre)
+- **Cloud storage** – primary offsite for documents and deliverables (EU datacentre)
 - **Physical external drive stored offsite** – rotated quarterly to a separate physical location (e.g., safety deposit, separate premises)
 
 ## 7. Backup Testing and Verification
 
 | Test | Frequency | Method |
 |---|---|---|
-| File restore test (macOS) | Monthly | Restore a sample file from Time Machine |
-| VM restore test (Proxmox) | Quarterly | Restore a VM from PBS backup to test environment |
+| File restore test (workstation) | Monthly | Restore a sample file from automated local backup |
+| VM restore test (server) | Quarterly | Restore a VM from server backup to test environment |
 | Full recovery simulation | Annually | Simulate loss of primary device; restore from backup |
-| Backup integrity check | Monthly | Verify PBS checksums; verify Time Machine log shows success |
+| Backup integrity check | Monthly | Verify server backup checksums; verify local backup logs show success |
 
 All test results are documented with: date, what was tested, outcome, any remediation taken.
 
@@ -96,9 +98,9 @@ All test results are documented with: date, what was tested, outcome, any remedi
 
 | Asset | RTO (Recovery Time Objective) | RPO (Recovery Point Objective) |
 |---|---|---|
-| MacBook Pro (primary workstation) | 4 hours (restore or replacement) | 1 hour (Time Machine) |
-| Proxmox VMs | 2 hours | 24 hours |
-| Client deliverables | 1 hour | 24 hours (OneDrive sync) |
+| Primary workstation | 4 hours (restore or replacement) | 1 hour (automated local backup) |
+| Server virtual machines | 24 hours | 24 hours |
+| Client deliverables | 24 hour | 24 hours (cloud sync) |
 | Email | 2 hours | 24 hours |
 
 These are targets for planning; actual recovery time depends on failure scenario.

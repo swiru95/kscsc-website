@@ -19,16 +19,16 @@ This policy defines the process for identifying, responding to, containing, and 
 Applies to all security incidents affecting:
 - Business devices and infrastructure
 - Client data or systems accessed during engagements
-- Business accounts (Microsoft 365, Azure, email)
+- Business accounts (cloud productivity suite, cloud platform, email)
 - Any personal data processed by the business
 
 ## 3. Incident Classification
 
 | Severity | Definition | Examples | Target Response Time |
 |---|---|---|---|
-| **P1 – Critical** | Active threat causing or likely to cause significant damage to client data, business systems, or compliance obligations | Active ransomware, confirmed data breach, root compromise of infrastructure | Immediate – within 1 hour |
-| **P2 – High** | Significant security event requiring urgent action | Successful credential phishing, unauthorised access to any system, malware detected but contained | Within 4 hours |
-| **P3 – Medium** | Suspicious activity or potential incident under investigation | Repeated failed auth, anomalous outbound traffic, lost device (unconfirmed compromise) | Within 24 hours |
+| **P1 – Critical** | Active threat causing or likely to cause significant damage to client data, business systems, or compliance obligations | Active ransomware, confirmed data breach, root compromise of infrastructure | Immediate – within 12 hours |
+| **P2 – High** | Significant security event requiring urgent action | Successful credential phishing, unauthorised access to any system, malware detected but contained | Within 24 hours |
+| **P3 – Medium** | Suspicious activity or potential incident under investigation | Repeated failed auth, anomalous outbound traffic, lost device (unconfirmed compromise) | Within 48 hours |
 | **P4 – Low** | Policy violation or minor event with no confirmed impact | Unencrypted file found in wrong location, software misconfiguration | Within 72 hours |
 
 ## 4. Incident Response Process
@@ -36,10 +36,10 @@ Applies to all security incidents affecting:
 ### Phase 1: Identification
 
 **Sources of detection:**
-- Splunk alerts (see Monitoring Policy MON-001)
+- SIEM alerts (see Monitoring Policy MON-001)
 - Manual review of logs or system behaviour
 - Client notification
-- Third-party notification (Microsoft Secure Score alert, Azure Defender, etc.)
+- Third-party notification (cloud security alerts, platform advisories, etc.)
 
 **On detection:**
 - Record the time of detection and initial observations
@@ -50,12 +50,11 @@ Applies to all security incidents affecting:
 
 **Short-term containment (immediate):**
 - Isolate affected device from network if active compromise suspected
-  - macOS: disable Wi-Fi and unplug Ethernet; do not power off
-  - Linux: `ip link set [interface] down` or unplug; preserve running state
-  - Proxmox VM: suspend or disconnect VM network interface
-- Revoke active sessions / tokens for affected accounts (Microsoft 365, Azure)
+  - Endpoint devices: disable network interfaces; do not power off to preserve volatile evidence
+  - Virtual machines: suspend or disconnect VM network interface
+- Revoke active sessions / tokens for affected cloud accounts
 - Invalidate and rotate compromised credentials immediately
-- If OpenVPN is compromised: revoke certificate, rebuild CRL, restart service
+- If VPN is compromised: revoke certificate, update revocation list, restart service
 
 **Long-term containment:**
 - Apply patches or configuration changes to prevent reinfection
@@ -116,10 +115,10 @@ If full information is unavailable within 72 hours, submit an initial notificati
 ## 6. Evidence Preservation
 
 Before remediation, preserve:
-- Memory dump if system is running and compromise is suspected (`osxpmem`, `avml`, `LiME`)
+- Memory dump if system is running and compromise is suspected (using appropriate forensic acquisition tools)
 - Disk image of affected system where forensics may be required
-- Relevant Splunk/log exports (timestamped, hashed with SHA-256)
-- Network captures if active C2 or exfiltration is suspected (Wireshark/tcpdump)
+- Relevant SIEM / log exports (timestamped, hashed with SHA-256)
+- Network captures if active C2 or exfiltration is suspected (using appropriate network capture tools)
 - Screenshots of anomalous behaviour, alerts, or attacker artefacts
 
 Evidence is stored in an encrypted, isolated location and not used for normal operations.
@@ -158,7 +157,7 @@ Incident records are retained for 5 years.
 |---|---|---|
 | UODO (Polish DPA) | GDPR breach notification | uodo.gov.pl / +48 22 531 03 00 |
 | CERT Polska | National CERT, incident reporting | cert.pl / incydent@cert.pl |
-| Microsoft Support | M365 / Azure account compromise | admin.microsoft.com → Support |
+| Cloud provider support | Cloud account compromise | Via provider admin portal → Support |
 | Client security contact | Incident affecting client systems | Per engagement contact sheet |
 
 ---

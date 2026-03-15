@@ -21,11 +21,11 @@ This register inventories all information assets used in business operations. It
 |---|---|---|---|---|---|---|---|---|
 | HW-001 | Laptop | Primary workstation | [Serial] | Owner | Primary workplace | Confidential | Platform-native | Active |
 | HW-002 | Desktop | Secondary workstation | [Serial] | Owner | Primary workplace | Confidential | Platform-native | Active |
-| HW-003 | Laptop | Field assessment device | [Serial] | Owner | Primary workplace / field | Confidential | LUKS | Active |
+| HW-003 | Laptop | Field assessment device | [Serial] | Owner | Primary workplace / field | Confidential | Full-disk encryption | Active |
 | HW-004 | Server | Virtualization host | [Serial] | Owner | Primary workplace | Confidential | Volume/VM encryption | Active |
 | HW-005 | External HDD | Backup storage – primary | [Model/S/N] | Owner | Primary workplace | Confidential | AES-256 | Active |
 | HW-006 | External HDD | Backup storage – secondary | [Model/S/N] | Owner | Primary workplace | Confidential | AES-256 | Active |
-| HW-007 | External HDD | Offsite backup – rotated quarterly | [Model/S/N] | Owner | Offsite | Confidential | VeraCrypt | Active |
+| HW-007 | External HDD | Offsite backup – rotated quarterly | [Model/S/N] | Owner | Offsite | Confidential | Full-disk encryption | Active |
 
 ---
 
@@ -64,9 +64,9 @@ This register inventories all information assets used in business operations. It
 
 | Key ID | Key Type | Fingerprint (SHA-256) | Used By | Authorised On | Created | Last Reviewed |
 |---|---|---|---|---|---|---|
-| KEY-001 | Ed25519 | [fingerprint] | Owner – Device A | Virtualization host, servers | [Date] | [Date] |
-| KEY-002 | Ed25519 | [fingerprint] | Owner – Device B | Virtualization host, servers | [Date] | [Date] |
-| KEY-003 | Ed25519 | [fingerprint] | Owner – Device C | Virtualization host | [Date] | [Date] |
+| KEY-001 | Asymmetric keypair | [fingerprint] | Owner – Device A | Virtualization host, servers | [Date] | [Date] |
+| KEY-002 | Asymmetric keypair | [fingerprint] | Owner – Device B | Virtualization host, servers | [Date] | [Date] |
+| KEY-003 | Asymmetric keypair | [fingerprint] | Owner – Device C | Virtualization host | [Date] | [Date] |
 
 ---
 
@@ -78,7 +78,7 @@ Active engagement credentials (test accounts, client VPN certs, API keys) are tr
 
 | Engagement ID | Client | Credential Type | Status | Expected Close |
 |---|---|---|---|---|
-| ENG-YYYY-NNN | [Confidential] | Test AD accounts, VPN cert, API keys | Active/Closed | [Date] |
+| ENG-YYYY-NNN | [Confidential] | Test accounts, VPN cert, API keys | Active/Closed | [Date] |
 | ENG-YYYY-NNN | [Confidential] | Test environment access | Closed | [Date] |
 
 ---
@@ -89,10 +89,10 @@ Active engagement credentials (test accounts, client VPN certs, API keys) are tr
 
 | Processing Activity | Data Categories | Legal Basis | Retention | Sub-processors | Transfer outside EU? |
 |---|---|---|---|---|---|
-| Client contact management | Names, business emails, business phones | Legitimate interest / Contract | Duration + 1 year | Microsoft 365 | No |
+| Client contact management | Names, business emails, business phones | Legitimate interest / Contract | Duration + 1 year | Cloud productivity suite | No |
 | Invoice and contract management | Names, addresses, NIP | Legal obligation | 5-7 years | None | No |
-| Security log collection | IP addresses (may include personal), auth events | Legitimate interest (security) | 12 months | None (local Splunk) | No |
-| Email communications | Names, email addresses | Contract / Legitimate interest | 3 years | Microsoft 365 | No |
+| Security log collection | IP addresses (may include personal), auth events | Legitimate interest (security) | 12 months | None (on-premise SIEM) | No |
+| Email communications | Names, email addresses | Contract / Legitimate interest | 3 years | Cloud productivity suite | No |
 
 ---
 
