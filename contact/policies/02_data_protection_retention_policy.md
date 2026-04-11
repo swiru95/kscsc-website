@@ -2,9 +2,10 @@
 
 **Document ID:** DPR-001  
 **Version:** 2.0  
-**Effective Date:** 2025-01-01  
+**Effective Date:** 01.03.2023  
 **Owner:** Krzysztof Swidrak, Sole Proprietor  
 **Review Cycle:** Annual  
+**Last Review Date:** 30.04.2026  
 **ISO 27001 Reference:** A.8, A.18  
 **GDPR Reference:** Art. 5, 13, 17, 25, 30
 

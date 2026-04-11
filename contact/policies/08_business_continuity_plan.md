@@ -2,9 +2,10 @@
 
 **Document ID:** BCP-001  
 **Version:** 1.0  
-**Effective Date:** 2025-01-01  
+**Effective Date:** 01.03.2023  
 **Owner:** Krzysztof Swidrak, Sole Proprietor – Krzysztof Swidrak Cyber Security Consulting (KSCSC)  
 **Review Cycle:** Annual minimum; after any BCP activation or material infrastructure change  
+**Last Review Date:** 30.04.2026  
 **ISO 27001 Reference:** A.17 (Information Security Aspects of BCM)  
 **DORA Reference:** Regulation (EU) 2022/2554, Art. 11 – ICT Business Continuity Policy  
 **Related Documents:** ISP-001, DPR-001, ACP-001, MON-001, BKP-001, IRP-001, AST-001
@@ -27,8 +28,9 @@ KSCSC is a sole proprietorship. This plan is proportionate to the scale and natu
 **REGON:** 524446530  
 **Principal:** Krzysztof Swidrak  
 **Services Provided:** Cybersecurity advisory and testing services (penetration testing, security assessments, architecture review, technical documentation)  
-**Primary Contact:** contact@kscsc.online  
-**BCP Emergency Contact:** contact@kscsc.online – same as above; escalation to trusted colleague (see Section 8) if principal is incapacitated  
+
+**Primary Contact:** ICE contact provided under NDA  
+**BCP Emergency Contact:** ICE contact provided under NDA; escalation to trusted colleague (see Section 8) if principal is incapacitated  
 
 This plan defines how KSCSC maintains or rapidly restores the delivery of contracted cybersecurity services following a disruptive event. Given the nature of services provided (advisory and testing, not operational infrastructure or 24/7 support), the primary continuity concern is the ability to deliver engagements on schedule and protect client data in transit.
 
@@ -241,7 +243,7 @@ Actions taken: [brief summary of recovery steps in progress]
 
 I will provide a further update by [specific time].
 
-If this is urgent, please contact me directly at contact@kscsc.online.
+If this is urgent, please contact the ICE contact provided under NDA.
 
 Krzysztof Swidrak
 KSCSC
@@ -381,4 +383,4 @@ I, Krzysztof Swidrak, acting as the owner and sole operator of Krzysztof Swidrak
 
 ---
 
-*Krzysztof Swidrak Cyber Security Consulting (KSCSC) | NIP: 9522237510 | contact@kscsc.online*
+*Krzysztof Swidrak Cyber Security Consulting (KSCSC) | NIP: 9522237510 | ICE contact provided under NDA*

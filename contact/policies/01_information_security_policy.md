@@ -2,9 +2,10 @@
 
 **Document ID:** ISP-001  
 **Version:** 2.0  
-**Effective Date:** 2025-01-01  
+**Effective Date:** 01.03.2023  
 **Owner:** Krzysztof Swidrak, Sole Proprietor  
 **Review Cycle:** Annual  
+**Last Review Date:** 30.04.2026  
 **ISO 27001 Reference:** A.5, A.6, A.7
 
 ---
