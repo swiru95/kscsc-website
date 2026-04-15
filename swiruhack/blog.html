@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KSCSC Blog - Cybersecurity articles by 5v1ru95">
+    <title>blog | KSCSC Blog</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/styles-blog.css">
+</head>
+
+<body>
+    <h1>root@kscsc:~# <span style="font-weight:normal">cat /var/log/blog</span></h1>
+    <p>// Security research & writeups</p>
+    <div class="sign">
+        <a href="/" style="text-decoration:none;color:inherit"><pre>
+██████╗ ██╗      ██████╗  ██████╗ 
+██╔══██╗██║     ██╔═══██╗██╔════╝ 
+██████╔╝██║     ██║   ██║██║  ███╗
+██╔══██╗██║     ██║   ██║██║   ██║
+██████╔╝███████╗╚██████╔╝╚██████╔╝
+╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝ 
+        </pre></a>
+    </div>
+
+    <!-- Article list view -->
+    <div class="grid" id="blog-list">
+        <!-- Populated by JS from blog-articles.js -->
+    </div>
+
+    <!-- Article reader view (hidden by default) -->
+    <div class="grid" id="blog-reader" style="display:none;">
+        <div class="md blog-back">
+            <a href="blog.html">&lt;-- back to blog</a>
+        </div>
+        <div class="md blog-content" id="blog-content">
+            <pre>Loading...</pre>
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="https://contact.kscsc.online">$ contact me</a>
+    </div>
+
+    <script src="js/blog-articles.js"></script>
+    <script src="js/marked.min.js"></script>
+    <script src="js/typing.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        var params = new URLSearchParams(window.location.search);
+        var post = params.get('post');
+
+        if (post) {
+            showArticle(post);
+        } else {
+            showList();
+        }
+
+        function showList() {
+            var list = document.getElementById('blog-list');
+            var reader = document.getElementById('blog-reader');
+            reader.style.display = 'none';
+            list.style.display = '';
+
+            if (!window.BLOG_ARTICLES || !BLOG_ARTICLES.length) {
+                list.innerHTML = '<div class="md blog-empty"><pre>No articles found.</pre></div>';
+                return;
+            }
+
+            // Sort by date descending
+            var sorted = BLOG_ARTICLES.slice().sort(function (a, b) {
+                return b.date.localeCompare(a.date);
+            });
+
+            var html = '';
+            sorted.forEach(function (article) {
+                html += '<div class="cve-item">' +
+                    '<a href="blog.html?post=' + encodeURIComponent(article.slug) + '">' +
+                    '#> ' + article.title +
+                    '<span class="blog-meta"> [' + article.date + ']</span>' +
+                    '</a>' +
+                    '<div class="blog-desc">' + escapeHtml(article.description) + '</div>' +
+                    '</div>';
+            });
+
+            list.innerHTML = html;
+        }
+
+        function showArticle(slug) {
+            // Validate slug — alphanumeric, hyphens, underscores only
+            if (!/^[a-zA-Z0-9_-]+$/.test(slug)) {
+                showError('Invalid article slug.');
+                return;
+            }
+
+            var list = document.getElementById('blog-list');
+            var reader = document.getElementById('blog-reader');
+            list.style.display = 'none';
+            reader.style.display = '';
+
+            // Update page title
+            var article = findArticle(slug);
+            if (article) {
+                document.title = article.title + ' | KSCSC Blog';
+            }
+
+            var url = 'blogs/' + slug + '.md';
+            fetch(url)
+                .then(function (res) {
+                    if (!res.ok) throw new Error('Not found');
+                    return res.text();
+                })
+                .then(function (md) {
+                    var content = document.getElementById('blog-content');
+                    content.innerHTML = marked.parse(md);
+                })
+                .catch(function () {
+                    showError('Article not found: ' + slug);
+                });
+        }
+
+        function showError(msg) {
+            var content = document.getElementById('blog-content');
+            content.innerHTML = '<pre class="blog-error">ERROR: ' + escapeHtml(msg) + '</pre>';
+        }
+
+        function findArticle(slug) {
+            for (var i = 0; i < BLOG_ARTICLES.length; i++) {
+                if (BLOG_ARTICLES[i].slug === slug) return BLOG_ARTICLES[i];
+            }
+            return null;
+        }
+
+        function escapeHtml(str) {
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(str));
+            return div.innerHTML;
+        }
+    })();
+    </script>
+</body>
+</html>
