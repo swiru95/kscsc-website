@@ -114,11 +114,28 @@
                 })
                 .then(function (md) {
                     var content = document.getElementById('blog-content');
-                    content.innerHTML = marked.parse(md);
+                    content.innerHTML = renderArticle(article, md);
                 })
                 .catch(function () {
                     showError('Article not found: ' + slug);
                 });
+        }
+
+        function renderArticle(article, md) {
+            var normalizedMarkdown = md.replace(/^\s*#\s+.*(?:\r?\n)+/, '');
+            var body = marked.parse(normalizedMarkdown);
+            var header = '';
+
+            if (article) {
+                header =
+                    '<header class="blog-article-header">' +
+                    '<p class="blog-article-kicker">published ' + escapeHtml(article.date) + '</p>' +
+                    '<h1>' + escapeHtml(article.title) + '</h1>' +
+                    '<p class="blog-article-summary">' + escapeHtml(article.description) + '</p>' +
+                    '</header>';
+            }
+
+            return header + body;
         }
 
         function showError(msg) {

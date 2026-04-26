@@ -47,6 +47,32 @@
     overflow-wrap: break-word;
 }
 
+.blog-article-header {
+    margin-bottom: 1.75em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid rgba(51, 255, 0, 0.25);
+}
+
+.blog-article-kicker {
+    margin: 0;
+    color: rgba(51, 255, 0, 0.55);
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+}
+
+.blog-article-header h1 {
+    margin-top: 0.35em;
+    margin-bottom: 0.35em;
+}
+
+.blog-article-summary {
+    margin: 0;
+    color: rgba(51, 255, 0, 0.75);
+    font-size: 0.98em;
+    max-width: 68ch;
+}
+
 .blog-content h1,
 .blog-content h2,
 .blog-content h3,
@@ -61,6 +87,14 @@
 .blog-content h1 { font-size: 1.4em; }
 .blog-content h2 { font-size: 1.2em; }
 .blog-content h3 { font-size: 1.05em; }
+
+.blog-article-header h1,
+.blog-article-header h2,
+.blog-article-header h3,
+.blog-article-header h4 {
+    border-bottom: none;
+    padding-bottom: 0;
+}
 
 .blog-content p {
     color: rgba(51, 255, 0, 0.85);

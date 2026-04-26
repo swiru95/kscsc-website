@@ -5,6 +5,12 @@
  */
 var BLOG_ARTICLES = [
     {
+        slug: 'macoslogs',
+        title: 'macOS Security Log Forwarding to Splunk via AWS S3',
+        date: '2026-04-26',
+        description: 'Forward macOS security logs to Splunk through S3 using IAM Roles Anywhere and X.509 device identity.'
+    },
+    {
         slug: 'yubica',
         title: 'PKI Setup with YubiKey Root CA',
         date: '2025-04-10',
