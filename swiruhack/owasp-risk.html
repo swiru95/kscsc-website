@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OWASP Risk Rating Methodology — interactive calculator">
+    <title>owasp-risk | KSCSC Blog</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/styles-owasp.css">
+</head>
+
+<body>
+    <h1>root@kscsc:~# <span style="font-weight:normal">owasp-risk</span></h1>
+    <p>// OWASP Risk Rating Methodology — interactive calculator</p>
+    <div class="sign">
+        <a href="/" style="text-decoration:none;color:inherit"><pre>
+▀████▀ ▀███▀ ▄█▀▀▀█▄█ ▄▄█▀▀▀█▄█▄█▀▀▀█▄█ ▄▄█▀▀▀█▄█   ▀███▀▀▀██▄▀███                   
+  ██   ▄█▀  ▄██    ▀███▀     ▀███    ▀███▀     ▀█     ██    ██  ██                   
+  ██ ▄█▀    ▀███▄   ██▀       ▀███▄   ██▀       ▀     ██    ██  ██   ▄██▀██▄ ▄█▀█████
+  █████▄      ▀█████▄█          ▀█████▄█              ██▀▀▀█▄▄  ██  ██▀   ▀████  ██  
+  ██  ███   ▄     ▀███▄       ▄     ▀███▄             ██    ▀█  ██  ██     ███████▀  
+  ██   ▀██▄ ██     ████▄     ▄▀█     ████▄     ▄▀     ██    ▄█  ██  ██▄   ▄███       
+▄████▄   ███▄▀█████▀  ▀▀█████▀█▀█████▀  ▀▀█████▀    ▄████████ ▄████▄ ▀█████▀ ███████ 
+                                                                            █▀     ██
+                                                                            ██████▀  
+    </pre></a>
+    </div>
+
+    <!-- Man page description -->
+    <div class="grid">
+        <div class="resp desc">
+            <pre>
+  <span style="color:#33ff00;font-weight:bold">$ man owasp-risk</span>
+
+  <span style="color:rgba(51,255,0,0.7)">NAME</span>
+      owasp-risk — OWASP Risk Rating Methodology Calculator
+
+  <span style="color:rgba(51,255,0,0.7)">DESCRIPTION</span>
+      Calculates vulnerability risk using the OWASP Risk Rating
+      Methodology. Evaluates 16 factors across two axes:
+
+  <span style="color:rgba(51,255,0,0.7)">LIKELIHOOD</span>   Threat Agent [4 factors] + Vulnerability [4 factors]
+  <span style="color:rgba(51,255,0,0.7)">IMPACT</span>       Technical    [4 factors] + Business     [4 factors]
+
+  <span style="color:rgba(51,255,0,0.7)">RISK LEVELS</span>
+      Score  0–3 → <span style="color:#33ff00">LOW</span>   3–6 → <span style="color:#ffcc00">MEDIUM</span>   6–9 → <span style="color:#ff6600">HIGH</span>
+
+  <span style="color:rgba(51,255,0,0.7)">USAGE</span>
+      Adjust the dropdowns below. Results update in real time.
+            </pre>
+        </div>
+    </div>
+
+    <!-- Calculator sections -->
+    <div class="grid" id="calculator">
+
+        <!-- THREAT AGENT FACTORS -->
+        <div class="resp owasp-section">
+            <div class="section-header owasp-toggle" data-target="body-threat">
+                <span class="toggle-icon">[-]</span> THREAT AGENT FACTORS
+                <span class="section-avg" id="avg-threat">—</span>
+            </div>
+            <div class="owasp-body" id="body-threat">
+            <div class="owasp-info">
+                <div class="owasp-info-header">// What is a Threat Agent?</div>
+                A threat agent is any entity (person, group, tool) that could exploit
+                a vulnerability. These factors estimate <em>who</em> is likely to attack
+                and how motivated and capable they are. Higher values = easier/more likely attack.
+                <br><br>
+                <strong>Skill Level</strong> — technical expertise of the threat agent.<br>
+                <strong>Motive</strong> — incentive to find and exploit the vulnerability.<br>
+                <strong>Opportunity</strong> — access required (lower score = harder to reach).<br>
+                <strong>Size</strong> — size of the group of possible attackers.
+            </div>
+                <div class="factor-row">
+                    <label for="sl">Skill Level</label>
+                    <select id="sl">
+                        <option value="1">1 — No technical skills</option>
+                        <option value="3">3 — Some technical skills</option>
+                        <option value="5" selected>5 — Advanced computer user</option>
+                        <option value="6">6 — Network and programming skills</option>
+                        <option value="9">9 — Security penetration skills</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="mo">Motive</label>
+                    <select id="mo">
+                        <option value="1">1 — Low or no reward</option>
+                        <option value="4" selected>4 — Possible reward</option>
+                        <option value="9">9 — High reward</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="op">Opportunity</label>
+                    <select id="op">
+                        <option value="0">0 — Full access or expensive resources required</option>
+                        <option value="4">4 — Special access or resources required</option>
+                        <option value="7" selected>7 — Some access or resources required</option>
+                        <option value="9">9 — No access or resources required</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="si">Size</label>
+                    <select id="si">
+                        <option value="2">2 — Developers</option>
+                        <option value="4">4 — System administrators</option>
+                        <option value="5">5 — Intranet users</option>
+                        <option value="6" selected>6 — Partners</option>
+                        <option value="8">8 — Authenticated users</option>
+                        <option value="9">9 — Anonymous Internet users</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- VULNERABILITY FACTORS -->
+        <div class="resp owasp-section">
+            <div class="section-header owasp-toggle" data-target="body-vuln">
+                <span class="toggle-icon">[-]</span> VULNERABILITY FACTORS
+                <span class="section-avg" id="avg-vuln">—</span>
+            </div>
+            <div class="owasp-body" id="body-vuln">
+            <div class="owasp-info">
+                <div class="owasp-info-header">// What are Vulnerability Factors?</div>
+                These describe how easy it is to discover and exploit the specific vulnerability,
+                and how likely an attack would be detected. They represent the <em>vulnerability</em>
+                itself, independent of the threat agent. Higher values = easier to exploit.
+                <br><br>
+                <strong>Ease of Discovery</strong> — how easy is it to find this vulnerability?<br>
+                <strong>Ease of Exploit</strong> — how easy is it to actually exploit it?<br>
+                <strong>Awareness</strong> — how well-known is this vulnerability type?<br>
+                <strong>Intrusion Detection</strong> — how likely is exploitation to be detected?
+            </div>
+                <div class="factor-row">
+                    <label for="ed">Ease of Discovery</label>
+                    <select id="ed">
+                        <option value="1">1 — Practically impossible</option>
+                        <option value="3">3 — Difficult</option>
+                        <option value="7" selected>7 — Easy</option>
+                        <option value="9">9 — Automated tools available</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="ee">Ease of Exploit</label>
+                    <select id="ee">
+                        <option value="1">1 — Theoretical</option>
+                        <option value="3">3 — Difficult</option>
+                        <option value="5" selected>5 — Easy</option>
+                        <option value="9">9 — Automated tools available</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="aw">Awareness</label>
+                    <select id="aw">
+                        <option value="1">1 — Unknown</option>
+                        <option value="4" selected>4 — Hidden</option>
+                        <option value="6">6 — Obvious</option>
+                        <option value="9">9 — Public knowledge</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="id_det">Intrusion Detection</label>
+                    <select id="id_det">
+                        <option value="1">1 — Active detection in application</option>
+                        <option value="3" selected>3 — Logged and reviewed</option>
+                        <option value="8">8 — Logged without review</option>
+                        <option value="9">9 — Not logged</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- TECHNICAL IMPACT -->
+        <div class="resp owasp-section">
+            <div class="section-header owasp-toggle" data-target="body-tech">
+                <span class="toggle-icon">[-]</span> TECHNICAL IMPACT
+                <span class="section-avg" id="avg-tech">—</span>
+            </div>
+            <div class="owasp-body" id="body-tech">
+            <div class="owasp-info">
+                <div class="owasp-info-header">// What is Technical Impact?</div>
+                Technical impact measures the effect of a successful exploit on the CIA triad
+                (Confidentiality, Integrity, Availability) and on Accountability.
+                Scores follow the CVSS-style semantics — estimate the <em>worst case</em>
+                realistic outcome, not just the theoretical maximum.
+                <br><br>
+                <strong>Loss of Confidentiality</strong> — how much data is exposed and how sensitive?<br>
+                <strong>Loss of Integrity</strong> — can data be modified? How severely?<br>
+                <strong>Loss of Availability</strong> — are services disrupted? Which ones?<br>
+                <strong>Loss of Accountability</strong> — can attacker actions be traced?
+            </div>
+                <div class="factor-row">
+                    <label for="lc">Loss of Confidentiality</label>
+                    <select id="lc">
+                        <option value="2">2 — Minimal non-sensitive data disclosed</option>
+                        <option value="6" selected>6 — Minimal critical data disclosed</option>
+                        <option value="7">7 — Extensive critical data disclosed</option>
+                        <option value="9">9 — All data disclosed</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="li_">Loss of Integrity</label>
+                    <select id="li_">
+                        <option value="1">1 — Minimal slightly corrupt data</option>
+                        <option value="3" selected>3 — Minimal seriously corrupt data</option>
+                        <option value="5">5 — Extensive slightly corrupt data</option>
+                        <option value="7">7 — Extensive seriously corrupt data</option>
+                        <option value="9">9 — All data totally corrupt</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="la">Loss of Availability</label>
+                    <select id="la">
+                        <option value="1">1 — Minimal secondary services interrupted</option>
+                        <option value="5" selected>5 — Minimal primary services interrupted</option>
+                        <option value="7">7 — Extensive primary services interrupted</option>
+                        <option value="9">9 — All services completely lost</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="lac">Loss of Accountability</label>
+                    <select id="lac">
+                        <option value="1">1 — Fully traceable</option>
+                        <option value="7" selected>7 — Possibly traceable</option>
+                        <option value="9">9 — Completely anonymous</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- BUSINESS IMPACT -->
+        <div class="resp owasp-section">
+            <div class="section-header owasp-toggle" data-target="body-biz">
+                <span class="toggle-icon">[-]</span> BUSINESS IMPACT
+                <span class="section-avg" id="avg-biz">—</span>
+            </div>
+            <div class="owasp-body" id="body-biz">
+            <div class="owasp-info">
+                <div class="owasp-info-header">// What is Business Impact?</div>
+                Business impact builds on technical impact and reflects consequences for the
+                organization — financial losses, brand damage, regulatory penalties, and privacy
+                breaches. If business impact is well-understood, OWASP recommends using it
+                as the primary driver of the final risk rating.
+                <br><br>
+                <strong>Financial Damage</strong> — direct monetary loss from exploitation.<br>
+                <strong>Reputation Damage</strong> — harm to brand, trust, and customer relationships.<br>
+                <strong>Non-Compliance</strong> — severity of regulatory or legal violations (GDPR, NIS2…).<br>
+                <strong>Privacy Violation</strong> — scale of personal data exposure.
+            </div>
+                <div class="factor-row">
+                    <label for="fd">Financial Damage</label>
+                    <select id="fd">
+                        <option value="1">1 — Less than cost to fix the vulnerability</option>
+                        <option value="3" selected>3 — Minor effect on annual profit</option>
+                        <option value="7">7 — Significant effect on annual profit</option>
+                        <option value="9">9 — Bankruptcy</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="rd">Reputation Damage</label>
+                    <select id="rd">
+                        <option value="1">1 — Minimal damage</option>
+                        <option value="4" selected>4 — Loss of major accounts</option>
+                        <option value="5">5 — Loss of goodwill</option>
+                        <option value="9">9 — Brand damage</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="nc">Non-Compliance</label>
+                    <select id="nc">
+                        <option value="2">2 — Minor violation</option>
+                        <option value="5" selected>5 — Clear violation</option>
+                        <option value="7">7 — High profile violation</option>
+                    </select>
+                </div>
+                <div class="factor-row">
+                    <label for="pv">Privacy Violation</label>
+                    <select id="pv">
+                        <option value="3">3 — One individual</option>
+                        <option value="5" selected>5 — Hundreds of people</option>
+                        <option value="7">7 — Thousands of people</option>
+                        <option value="9">9 — Millions of people</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULT PANEL -->
+        <div class="resp owasp-result">
+            <div class="section-header">[ RISK ASSESSMENT ]</div>
+            <pre id="result-output"></pre>
+            <div class="owasp-actions">
+                <button id="btn-copy">$ copy report</button>
+                <button id="btn-reset">$ reset</button>
+            </div>
+        </div>
+
+        <!-- REFERENCES -->
+        <div class="resp owasp-result">
+            <div class="section-header">[ REFERENCES ]</div>
+            <div class="owasp-info" style="margin-top:0;border:none;padding:8px 0;">
+                <div class="owasp-info-header">// Risk Matrix</div>
+                The final risk level is determined by the OWASP risk matrix:
+                <pre style="margin:8px 0;font-size:0.9em;">
+  Likelihood \ Impact   LOW       MEDIUM    HIGH
+  ─────────────────────────────────────────────
+  LOW                   NOTE      LOW       MEDIUM
+  MEDIUM                LOW       MEDIUM    HIGH
+  HIGH                  MEDIUM    HIGH      CRITICAL
+                </pre>
+                Impact score = max(Technical, Business). Likelihood score = avg(Threat Agent, Vulnerability).
+                <br><br>
+                <div class="owasp-info-header">// Official Documentation</div>
+                <a href="https://owasp.org/www-community/OWASP_Risk_Rating_Methodology" target="_blank" rel="noopener">
+                    OWASP Risk Rating Methodology
+                </a> — primary reference for this calculator.<br>
+                <a href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html" target="_blank" rel="noopener">
+                    OWASP Threat Modeling Cheat Sheet
+                </a> — how to identify threat agents and attack scenarios.<br>
+                <a href="https://owasp.org/www-project-risk-assessment-framework/" target="_blank" rel="noopener">
+                    OWASP Risk Assessment Framework (RAF)
+                </a> — extended tooling for risk management programs.<br>
+                <a href="https://nvd.nist.gov/vuln-metrics/cvss" target="_blank" rel="noopener">
+                    NIST CVSS Calculator
+                </a> — complementary scoring system (compare with OWASP Risk Rating).
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <a href="https://contact.kscsc.online">$ contact me</a>
+    </div>
+    <script src="js/owasp-risk.js"></script>
+</body>
+</html>
