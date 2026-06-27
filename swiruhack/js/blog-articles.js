@@ -5,6 +5,12 @@
  */
 var BLOG_ARTICLES = [
     {
+        slug: 'crushftpharness',
+        title: 'CrushFTP Pentest Harness',
+        date: '2025-06-27',
+        description: 'A harness for pentesting CrushFTP servers in local environment.'
+    },
+    {
         slug: 'macoslogs',
         title: 'macOS Security Log Forwarding to Splunk via AWS S3',
         date: '2026-04-26',
