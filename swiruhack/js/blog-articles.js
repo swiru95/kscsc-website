@@ -5,6 +5,12 @@
  */
 var BLOG_ARTICLES = [
     {
+        slug: 'llmbriefing',
+        title: 'A Daily Threat Briefing an LLM Can Be Trusted With',
+        date: '2026-08-12',
+        description: 'Ninety RSS feeds, local embeddings and verified primary sources — using a model only where judgement is actually needed.'
+    },
+    {
         slug: 'crushftpharness',
         title: 'CrushFTP Pentest Harness',
         date: '2025-06-27',
