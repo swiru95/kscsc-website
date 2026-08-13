@@ -5,6 +5,12 @@
  */
 var BLOG_ARTICLES = [
     {
+        slug: 'k3scluster',
+        title: 'I Deleted My Whole Cluster on Purpose',
+        date: '2026-08-13',
+        description: 'Rebuilding a homelab Kubernetes cluster from a backup script — and ending up with per-pod X.509 identity that reaches into AWS IAM.'
+    },
+    {
         slug: 'llmbriefing',
         title: 'A Daily Threat Briefing an LLM Can Be Trusted With',
         date: '2026-08-12',
