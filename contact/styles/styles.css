@@ -156,9 +156,15 @@ body {
 
 .id-card .email-cta {
     margin: 0;
+    /* The card is too narrow to ever fit both buttons on one line, so stack
+       them and let them share a width rather than wrap to ragged sizes. */
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
     gap: 12px;
+}
+
+.id-card .email-cta .cta-button {
     justify-content: center;
 }
 
