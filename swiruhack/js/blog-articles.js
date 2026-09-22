@@ -5,6 +5,12 @@
  */
 var BLOG_ARTICLES = [
     {
+        slug: 'corazaenvoy',
+        title: 'Coraza WAF on Envoy Gateway',
+        date: '2026-09-22',
+        description: 'Putting the OWASP Core Rule Set in front of a whole cluster with one Kubernetes manifest — no sidecars, no second proxy, no application changes.'
+    },
+    {
         slug: 'k3scluster',
         title: 'I Deleted My Whole Cluster on Purpose',
         date: '2026-08-13',
